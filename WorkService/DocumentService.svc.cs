@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using DBHelper;
+using Model;
 
 namespace WorkService
 {
@@ -18,24 +19,43 @@ namespace WorkService
             return string.Format("You entered: {0}", value);
         }
 
-        public Models.ServerMessage RegisNewUser(Model.codeUsers user)
+        public Models.ServerMessage RegisNewUser(codeUsers user)
         {
-            if (!UserExists(user.loginId))
+            if (string.IsNullOrEmpty(user.mail))
             {
-                
+                return new Models.ServerMessage()
+                {
+                    Success = false,
+                    Message = "mail不能为空"
+                };
             }
+            else if (user.SelectCount(u => u.mail == user.mail) < 1)
+            {
+                int count = user.Insert();
+                Models.ServerMessage msg = new Models.ServerMessage()
+                {
+                    Success = count > 0,
+                    Message = string.Format("插入了{0}条数据", count)
+                };
+                return msg;
+            }
+            else
+                return new Models.ServerMessage()
+                {
+                    Success = false,
+                    Message = string.Format("用户 {0} 已存在", user.mail)
+                };
         }
 
-        public Models.ServerMessage Login(string user, string pwd)
+        public Models.ServerMessage Login(string mail, string pwd)
         {
-            throw new NotImplementedException();
-        }
-
-        private bool UserExists(string loginId)
-        {
-            string sql = "select count(1) from codeUsers where loginId = '{0}'";
-            int count = (int)MyDBHelper.QueryScalar(string.Format(sql, loginId));
-            return count > 0;
+            codeUsers user = new codeUsers();
+            bool ok = user.SelectCount(u => u.mail == mail && u.mailpwd == pwd) > 0;
+            return new Models.ServerMessage()
+            {
+                Success = ok,
+                Message = ok ? "登陆成功" : "登陆失败"
+            };
         }
     }
 }
