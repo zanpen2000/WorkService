@@ -1,0 +1,173 @@
+<#@ template language="C#" debug="True" hostspecific="True" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.xml" #>
+
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.Data" #>
+<#@import namespace="System.Text" #>
+
+<# 
+  string NameSpace="Model";
+  string Server=".";
+  string DataBase="WorkService"; 
+  string UserName="sa"; 
+  string PassWord="010203";  
+ #> 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+
+namespace <#= NameSpace #>
+{     
+	<#
+	string connectionString=string.Format("Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID={2};Password={3}",Server,DataBase,UserName,PassWord);
+
+
+	SqlConnection conn = new SqlConnection(connectionString);
+
+	conn.Open();
+
+	string getTables=@"select sysobjects.[name] as tableName,isnull(sys.extended_properties.value,'') as remark,'Table' as Type
+from sysobjects
+LEFT JOIN sys.extended_properties
+ON sysobjects.id = sys.extended_properties.major_id AND sys.extended_properties.minor_id = 0
+where sysobjects.xtype='U' and sysobjects.name <>'dtproperties'
+union all
+select sysobjects.[name],f.value ,'View'
+from sysobjects
+LEFT OUTER JOIN sys.extended_properties f ON sysobjects.id = f.major_id AND  f.minor_id = 0 and f.name='MS_Description'
+where sysobjects.xtype='V'
+order by sysobjects.[name]";
+	
+	SqlCommand command_getTables = new SqlCommand(getTables,conn);
+	SqlDataAdapter ad_getTables = new SqlDataAdapter(command_getTables);
+	System.Data.DataTable schema = new System.Data.DataTable();
+	ad_getTables.Fill(schema);
+
+
+	string selectQuery = "select * from @tableName";
+
+	SqlCommand command = new SqlCommand(selectQuery,conn);
+
+	SqlDataAdapter ad = new SqlDataAdapter(command);
+
+	System.Data.DataSet ds = new DataSet();
+
+	foreach(System.Data.DataRow row in schema.Rows)
+	{#>
+			
+				/// <summary>
+				/// <#=row["remark"].ToString() #>
+				/// </summary>
+				[DataEntityAttribute("<#=row["tableName"].ToString() #>")]
+				public class <#= row["tableName"].ToString() #> : Entity
+				{
+					
+			<# 
+				DataTable Description = new DataTable();
+				string sql="";
+				if(row["Type"].ToString()=="Table"){
+					sql=@"SELECT d.name as 表名,  isnull(f.value,'') as 表说明, a.name 列名,  b.name 类型,   
+COLUMNPROPERTY(a.id,a.name,'PRECISION') AS 长度, COLUMNPROPERTY(a.id, a.name, 'PRECISION') as 精度 ,  
+ISNULL(COLUMNPROPERTY(a.id,a.name,'Scale'),0) AS 小数位,  CASE WHEN COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 THEN 'true' ELSE 'false' END as 标识,  
+(CASE WHEN ( SELECT COUNT(*)  FROM sysobjects  WHERE (name IN  (SELECT name  FROM sysindexes  WHERE (id = a.id) AND (indid IN (SELECT indid  FROM sysindexkeys  WHERE (id = a.id) AND (colid IN (SELECT colid FROM syscolumns WHERE (id = a.id) AND (name = a.name))))))) AND (xtype = 'PK'))>0 THEN 'true' ELSE 'false' END) 主键,  
+(CASE WHEN a.isnullable=1 THEN 'true' ELSE 'false' END) 允许空,  ISNULL(e.text,'') 默认值,  ISNULL(g.[value],'') AS 描述   
+FROM syscolumns a   
+LEFT JOIN systypes b ON a.xtype=b.xusertype   
+INNER JOIN sysobjects d ON a.id=d.id AND d.xtype='U' AND d.name <>'dtproperties'   
+LEFT JOIN syscomments e ON a.cdefault=e.id   
+LEFT JOIN sys.extended_properties g  ON a.id=g.major_id AND a.colid = g.minor_id   
+LEFT OUTER JOIN sys.extended_properties f ON d.id = f.major_id AND f.minor_id = 0 
+WHERE d.name='{0}' ORDER BY a.id,a.colorder ";
+				sql = string.Format(sql, row["tableName"].ToString());
+
+				}else if(row["Type"].ToString()=="View"){
+
+					sql=@"SELECT d.name as 表名,  isnull(f.value,'') as 表说明, a.name 列名,  b.name 类型,  COLUMNPROPERTY(a.id,a.name,'PRECISION') AS 长度, 
+COLUMNPROPERTY(a.id, a.name, 'PRECISION') as 精度 , ISNULL(COLUMNPROPERTY(a.id,a.name,'Scale'),0) AS 小数位,  CASE WHEN COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 THEN 'true' ELSE 'false' END as 标识,  
+(CASE WHEN ( SELECT COUNT(*)  FROM sysobjects  WHERE (name IN  (SELECT name  FROM sysindexes  WHERE (id = a.id) AND (indid IN (SELECT indid  FROM sysindexkeys  WHERE (id = a.id) AND (colid IN (SELECT colid FROM syscolumns WHERE (id = a.id) AND (name = a.name))))))) AND (xtype = 'PK'))>0 THEN 'true' ELSE 'false' END) 主键, 
+(CASE WHEN a.isnullable=1 THEN 'true' ELSE 'false' END) 允许空,  ISNULL(e.text,'') 默认值,  ISNULL(g.[value],'') AS 描述  FROM syscolumns a  
+LEFT JOIN systypes b ON a.xtype=b.xusertype  
+INNER JOIN sysobjects d ON a.id=d.id AND d.xtype='V' AND d.name <>'dtproperties'  
+LEFT JOIN syscomments e ON a.cdefault=e.id  
+LEFT JOIN sys.extended_properties g  ON a.id=g.major_id AND a.colid = g.minor_id  
+LEFT OUTER JOIN sys.extended_properties f ON d.id = f.major_id AND f.minor_id = 0 and f.name='MS_Description'
+WHERE d.name='{0}'
+ORDER BY a.id,a.colorder ";
+				sql = string.Format(sql, row["tableName"].ToString());
+
+				}else{
+					continue;
+				}
+
+				SqlCommand cmd_GetColumnDescription = new SqlCommand(sql, conn);
+				SqlDataAdapter ad1 = new SqlDataAdapter(cmd_GetColumnDescription);
+				ad1.Fill(Description);
+				foreach (DataRow dr in Description.Rows)
+				{
+					string type="System.String";
+					string defaultValue="";
+					switch(dr["类型"].ToString().ToLower())
+					{
+						case "varchar":
+						case "char":
+						case "text":
+						case "nvarchar":
+						case "nchar":
+						case "ntext":
+							type="System.String";
+							defaultValue="\"\"";
+						break;
+						case "decimal":
+						case "float":
+						case "numeric":
+							type="System.Decimal";
+							defaultValue="0";
+						break;
+						case "int":
+							type="System.Int32";
+							defaultValue="0";
+						break;
+						case "datetime":
+						case "date":
+						case "time":
+							if(dr["允许空"].ToString()=="false"){
+								type="System.DateTime";
+								defaultValue="DateTime.Now";
+							}else{
+								type="System.DateTime?";
+								defaultValue="null";
+							}
+						break;
+						case "bit":
+							type="System.Boolean";
+							defaultValue="true";
+						break;
+						default:
+							type="System.String";
+							defaultValue="\"\"";
+						break;
+					}
+				#>
+
+					private <#=type #> _<#=dr["列名"] #> = <#=defaultValue #>;
+					/// <summary>
+					/// <#=dr["描述"] #>
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "<#=dr["列名"] #>", FieldType = "<#=dr["类型"] #>", FieldRemark = "<#=dr["描述"] #>", Length = <#=dr["长度"] #>, IsPrimaryKey = <#=dr["主键"] #>, IsIdentity = <#=dr["标识"] #>, AllowNull = <#=dr["允许空"] #>)]
+					public <#=type #> <#=dr["列名"] #>{ set { _<#=dr["列名"] #> = value; changed("<#=dr["列名"]#>");} get { return _<#=dr["列名"] #>; } }
+
+				<#}
+		#>
+}
+
+
+	<#}
+	#>
+
+}
