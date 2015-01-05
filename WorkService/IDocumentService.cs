@@ -8,11 +8,10 @@ using System.Text;
 
 namespace WorkService
 {
-    
-    [ServiceContract]
+
+    [ServiceContract(SessionMode = SessionMode.Required)]
     public interface IDocumentService
     {
-
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,
      BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "/getdata/{value}")]
@@ -21,9 +20,26 @@ namespace WorkService
         [OperationContract]
         Models.ServerMessage RegisNewUser(Model.codeUsers user);
 
-        [OperationContract]
+        [OperationContract(IsInitiating = true)]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,
      BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "login/{user}/{pwd}")]
-        Models.ServerMessage Login(string user, string pwd); 
+        Models.ServerMessage Login(string user, string pwd);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", ResponseFormat = WebMessageFormat.Json,
+     BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "adddiary/{title}/{content}")]
+        Models.ServerMessage AddDiary(int userId, string title, string content);
+
+        [OperationContract(IsInitiating = true)]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,
+   BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "getresult")]
+        string GetResult();
+
+        [OperationContract(IsInitiating = true)]
+        void SetResult(int value);
+
+        [OperationContract(IsInitiating = true)]
+        string GetSessionId();
+
     }
 }

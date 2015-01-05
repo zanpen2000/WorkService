@@ -10,9 +10,20 @@ using Model;
 
 namespace WorkService
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class DocumentService : IDocumentService
     {
+        private int nCount = 0;
 
+        public void SetResult(int value)
+        {
+            nCount = value;
+        }
+
+        public string GetResult()
+        {
+            return (nCount).ToString();
+        }
 
         public string GetData(string value)
         {
@@ -57,6 +68,45 @@ namespace WorkService
                 Success = ok,
                 Message = ok ? "登陆成功" : "登陆失败"
             };
+        }
+        
+        public Models.ServerMessage AddDiary(int userId, string title, string content)
+        {
+            var failResult = new Models.ServerMessage()
+            {
+                Success = false,
+                Message = "保存失败"
+            };
+
+            domainItems item = new domainItems();
+            item.date = DateTime.Now.Date;
+            item.userId = userId;
+            item.name = title;
+            item.valid = true;
+            if (item.Insert() == 1)
+            {
+                domainText text = new domainText();
+                text.itemId = item.id;
+                text.text = content;
+                if (text.Insert() == 1)
+                {
+                    return new Models.ServerMessage()
+                    {
+                        Success = true,
+                        Message = "保存成功"
+                    };
+                }
+                else failResult.Message = "domainText 保存失败";
+            }
+            else failResult.Message = "domainItems 保存失败";
+
+            return failResult;
+        }
+
+
+        public string GetSessionId()
+        {
+            return OperationContext.Current.SessionId;
         }
     }
 }
