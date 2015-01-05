@@ -158,14 +158,6 @@ namespace Model
 					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
 					public System.String mailto{ set { _mailto = value; changed("mailto");} get { return _mailto; } }
 
-				
-					private System.String _loginId = "";
-					/// <summary>
-					/// 
-					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "loginId", FieldType = "varchar", FieldRemark = "", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
-					public System.String loginId{ set { _loginId = value; changed("loginId");} get { return _loginId; } }
-
 				}
 
 

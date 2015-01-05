@@ -14,7 +14,7 @@ namespace WorkService
     {
 
 
-        public string GetData(int value)
+        public string GetData(string value)
         {
             return string.Format("You entered: {0}", value);
         }
@@ -49,6 +49,7 @@ namespace WorkService
 
         public Models.ServerMessage Login(string mail, string pwd)
         {
+            MyDBHelper.InitConnectionString();
             codeUsers user = new codeUsers();
             bool ok = user.SelectCount(u => u.mail == mail && u.mailpwd == pwd) > 0;
             return new Models.ServerMessage()

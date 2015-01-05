@@ -8,18 +8,22 @@ using System.Text;
 
 namespace WorkService
 {
-    // 注意: 使用“重构”菜单上的“重命名”命令，可以同时更改代码和配置文件中的接口名“IService1”。
+    
     [ServiceContract]
     public interface IDocumentService
     {
 
         [OperationContract]
-        string GetData(int value);
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,
+     BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "/getdata/{value}")]
+        string GetData(string value);
 
         [OperationContract]
         Models.ServerMessage RegisNewUser(Model.codeUsers user);
 
         [OperationContract]
+        [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json,
+     BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "login/{user}/{pwd}")]
         Models.ServerMessage Login(string user, string pwd); 
     }
 }
