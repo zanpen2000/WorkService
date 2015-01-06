@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLayer", "AppLayer\AppLay
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientDemo", "ClientDemo\ClientDemo.csproj", "{B416B17F-716A-4B04-94A2-BA9BB85FF70B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContract", "ServiceContract\ServiceContract.csproj", "{2947999F-7937-4049-8751-A6E12C293E29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B416B17F-716A-4B04-94A2-BA9BB85FF70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B416B17F-716A-4B04-94A2-BA9BB85FF70B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B416B17F-716A-4B04-94A2-BA9BB85FF70B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2947999F-7937-4049-8751-A6E12C293E29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2947999F-7937-4049-8751-A6E12C293E29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2947999F-7937-4049-8751-A6E12C293E29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2947999F-7937-4049-8751-A6E12C293E29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

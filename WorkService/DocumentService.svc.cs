@@ -7,6 +7,8 @@ using System.ServiceModel.Web;
 using System.Text;
 using DBHelper;
 using Model;
+using ServiceContract;
+using ServiceContract.Models;
 
 namespace WorkService
 {
@@ -30,11 +32,11 @@ namespace WorkService
             return string.Format("You entered: {0}", value);
         }
 
-        public Models.ServerMessage RegisNewUser(codeUsers user)
+        public ServerMessage RegisNewUser(codeUsers user)
         {
             if (string.IsNullOrEmpty(user.mail))
             {
-                return new Models.ServerMessage()
+                return new ServerMessage()
                 {
                     Success = false,
                     Message = "mail不能为空"
@@ -43,7 +45,7 @@ namespace WorkService
             else if (user.SelectCount(u => u.mail == user.mail) < 1)
             {
                 int count = user.Insert();
-                Models.ServerMessage msg = new Models.ServerMessage()
+                ServerMessage msg = new ServerMessage()
                 {
                     Success = count > 0,
                     Message = string.Format("插入了{0}条数据", count)
@@ -51,28 +53,28 @@ namespace WorkService
                 return msg;
             }
             else
-                return new Models.ServerMessage()
+                return new ServerMessage()
                 {
                     Success = false,
                     Message = string.Format("用户 {0} 已存在", user.mail)
                 };
         }
 
-        public Models.ServerMessage Login(string mail, string pwd)
+        public ServerMessage Login(string mail, string pwd)
         {
             MyDBHelper.InitConnectionString();
             codeUsers user = new codeUsers();
             bool ok = user.SelectCount(u => u.mail == mail && u.mailpwd == pwd) > 0;
-            return new Models.ServerMessage()
+            return new ServerMessage()
             {
                 Success = ok,
                 Message = ok ? "登陆成功" : "登陆失败"
             };
         }
         
-        public Models.ServerMessage AddDiary(int userId, string title, string content)
+        public ServerMessage AddDiary(int userId, string title, string content)
         {
-            var failResult = new Models.ServerMessage()
+            var failResult = new ServerMessage()
             {
                 Success = false,
                 Message = "保存失败"
@@ -90,7 +92,7 @@ namespace WorkService
                 text.text = content;
                 if (text.Insert() == 1)
                 {
-                    return new Models.ServerMessage()
+                    return new ServerMessage()
                     {
                         Success = true,
                         Message = "保存成功"
@@ -109,5 +111,8 @@ namespace WorkService
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
             callback.CallbackAction(OperationContext.Current.SessionId);
         }
+
+
+      
     }
 }

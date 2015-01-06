@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WorkService.Models
+namespace ServiceContract.Models
 {
     public class ServerMessage
     {
