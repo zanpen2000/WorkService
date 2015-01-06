@@ -9,7 +9,7 @@ using System.Text;
 namespace WorkService
 {
 
-    [ServiceContract(SessionMode = SessionMode.Required)]
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IDocumentCallback))]
     public interface IDocumentService
     {
         [OperationContract]
@@ -38,8 +38,8 @@ namespace WorkService
         [OperationContract(IsInitiating = true)]
         void SetResult(int value);
 
-        [OperationContract(IsInitiating = true)]
-        string GetSessionId();
+        [OperationContract(IsInitiating = true, IsOneWay = true)]
+        void GetSessionId();
 
     }
 }

@@ -10,7 +10,7 @@ using Model;
 
 namespace WorkService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class DocumentService : IDocumentService
     {
         private int nCount = 0;
@@ -104,9 +104,10 @@ namespace WorkService
         }
 
 
-        public string GetSessionId()
+        public void GetSessionId()
         {
-            return OperationContext.Current.SessionId;
+            IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
+            callback.CallbackAction(OperationContext.Current.SessionId);
         }
     }
 }

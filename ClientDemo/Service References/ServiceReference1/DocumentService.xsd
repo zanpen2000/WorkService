@@ -90,10 +90,10 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetSessionIdResponse">
+  <xs:element name="CallbackAction">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GetSessionIdResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sessionId" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

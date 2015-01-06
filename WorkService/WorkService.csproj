@@ -82,6 +82,7 @@
     <Compile Include="DocumentService.svc.cs">
       <DependentUpon>DocumentService.svc</DependentUpon>
     </Compile>
+    <Compile Include="IDocumentCallback.cs" />
     <Compile Include="IDocumentService.cs" />
     <Compile Include="Models\ServerMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

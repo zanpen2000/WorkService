@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClientDemo.docsvr {
+namespace ClientDemo.ServiceReference1 {
     using System.Runtime.Serialization;
     using System;
     
@@ -17,9 +17,9 @@ namespace ClientDemo.docsvr {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Entity", Namespace="http://schemas.datacontract.org/2004/07/Model")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ClientDemo.docsvr.codeUsers))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ClientDemo.ServiceReference1.codeUsers))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(object[]))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ClientDemo.docsvr.ServerMessage))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(WorkService.Models.ServerMessage))]
     public partial class Entity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -113,7 +113,7 @@ namespace ClientDemo.docsvr {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="codeUsers", Namespace="http://schemas.datacontract.org/2004/07/Model")]
     [System.SerializableAttribute()]
-    public partial class codeUsers : ClientDemo.docsvr.Entity {
+    public partial class codeUsers : ClientDemo.ServiceReference1.Entity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int departIdField;
@@ -244,82 +244,21 @@ namespace ClientDemo.docsvr {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServerMessage", Namespace="http://schemas.datacontract.org/2004/07/WorkService.Models")]
-    [System.SerializableAttribute()]
-    public partial class ServerMessage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool SuccessField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
-            get {
-                return this.MessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Success {
-            get {
-                return this.SuccessField;
-            }
-            set {
-                if ((this.SuccessField.Equals(value) != true)) {
-                    this.SuccessField = value;
-                    this.RaisePropertyChanged("Success");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="docsvr.IDocumentService", SessionMode=System.ServiceModel.SessionMode.Required)]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IDocumentService", CallbackContract=typeof(ClientDemo.ServiceReference1.IDocumentServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
     public interface IDocumentService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/GetData", ReplyAction="http://tempuri.org/IDocumentService/GetDataResponse")]
         string GetData(string value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/RegisNewUser", ReplyAction="http://tempuri.org/IDocumentService/RegisNewUserResponse")]
-        ClientDemo.docsvr.ServerMessage RegisNewUser(ClientDemo.docsvr.codeUsers user);
+        WorkService.Models.ServerMessage RegisNewUser(ClientDemo.ServiceReference1.codeUsers user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/Login", ReplyAction="http://tempuri.org/IDocumentService/LoginResponse")]
-        ClientDemo.docsvr.ServerMessage Login(string user, string pwd);
+        WorkService.Models.ServerMessage Login(string user, string pwd);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/AddDiary", ReplyAction="http://tempuri.org/IDocumentService/AddDiaryResponse")]
-        ClientDemo.docsvr.ServerMessage AddDiary(int userId, string title, string content);
+        WorkService.Models.ServerMessage AddDiary(int userId, string title, string content);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/GetResult", ReplyAction="http://tempuri.org/IDocumentService/GetResultResponse")]
         string GetResult();
@@ -327,50 +266,58 @@ namespace ClientDemo.docsvr {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/SetResult", ReplyAction="http://tempuri.org/IDocumentService/SetResultResponse")]
         void SetResult(int value);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDocumentService/GetSessionId", ReplyAction="http://tempuri.org/IDocumentService/GetSessionIdResponse")]
-        string GetSessionId();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IDocumentService/GetSessionId")]
+        void GetSessionId();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IDocumentServiceChannel : ClientDemo.docsvr.IDocumentService, System.ServiceModel.IClientChannel {
+    public interface IDocumentServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IDocumentService/CallbackAction")]
+        void CallbackAction(string sessionId);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IDocumentServiceChannel : ClientDemo.ServiceReference1.IDocumentService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class DocumentServiceClient : System.ServiceModel.ClientBase<ClientDemo.docsvr.IDocumentService>, ClientDemo.docsvr.IDocumentService {
+    public partial class DocumentServiceClient : System.ServiceModel.DuplexClientBase<ClientDemo.ServiceReference1.IDocumentService>, ClientDemo.ServiceReference1.IDocumentService {
         
-        public DocumentServiceClient() {
+        public DocumentServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public DocumentServiceClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
+        public DocumentServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public DocumentServiceClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public DocumentServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public DocumentServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
+        public DocumentServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public DocumentServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
+        public DocumentServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
         
         public string GetData(string value) {
             return base.Channel.GetData(value);
         }
         
-        public ClientDemo.docsvr.ServerMessage RegisNewUser(ClientDemo.docsvr.codeUsers user) {
+        public WorkService.Models.ServerMessage RegisNewUser(ClientDemo.ServiceReference1.codeUsers user) {
             return base.Channel.RegisNewUser(user);
         }
         
-        public ClientDemo.docsvr.ServerMessage Login(string user, string pwd) {
+        public WorkService.Models.ServerMessage Login(string user, string pwd) {
             return base.Channel.Login(user, pwd);
         }
         
-        public ClientDemo.docsvr.ServerMessage AddDiary(int userId, string title, string content) {
+        public WorkService.Models.ServerMessage AddDiary(int userId, string title, string content) {
             return base.Channel.AddDiary(userId, title, content);
         }
         
@@ -382,8 +329,8 @@ namespace ClientDemo.docsvr {
             base.Channel.SetResult(value);
         }
         
-        public string GetSessionId() {
-            return base.Channel.GetSessionId();
+        public void GetSessionId() {
+            base.Channel.GetSessionId();
         }
     }
 }
