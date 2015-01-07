@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace Application.Layer.Tools
+namespace AppLayer
 {
     /// <summary>
     /// 对程序默认配置文件的增、删、改、查

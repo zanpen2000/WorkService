@@ -31,7 +31,12 @@ namespace ServiceContract
         void SetResult(int value);
 
         [OperationContract]
-        void GetSessionId();
+        void GetUserInfo(string number);
 
+        [OperationContract]
+        void GetUserDiarys(string userNum, string currentpage);
+
+
+        
     }
 }

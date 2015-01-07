@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Runtime.Serialization;
 
 namespace <#= NameSpace #>
 {     
@@ -65,6 +65,7 @@ order by sysobjects.[name]";
 				/// <#=row["remark"].ToString() #>
 				/// </summary>
 				[DataEntityAttribute("<#=row["tableName"].ToString() #>")]
+				[DataContract]
 				public class <#= row["tableName"].ToString() #> : Entity
 				{
 					
@@ -160,6 +161,7 @@ ORDER BY a.id,a.colorder ";
 					/// <#=dr["描述"] #>
 					/// </summary>
 					[DataEntityFieldAttribute(FieldName = "<#=dr["列名"] #>", FieldType = "<#=dr["类型"] #>", FieldRemark = "<#=dr["描述"] #>", Length = <#=dr["长度"] #>, IsPrimaryKey = <#=dr["主键"] #>, IsIdentity = <#=dr["标识"] #>, AllowNull = <#=dr["允许空"] #>)]
+					[DataMember]
 					public <#=type #> <#=dr["列名"] #>{ set { _<#=dr["列名"] #> = value; changed("<#=dr["列名"]#>");} get { return _<#=dr["列名"] #>; } }
 
 				<#}

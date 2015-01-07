@@ -11,12 +11,14 @@ using System.Reflection;
 using System.Text;
 using System.Transactions;
 using System.Windows.Input;
+using System.Runtime.Serialization;
 
 namespace Model
 {
     /// <summary>
     /// 数据库实体类的基类
     /// </summary>
+    [DataContractAttribute]
     public class Entity : INotifyPropertyChanged
     {
         #region

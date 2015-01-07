@@ -15,7 +15,7 @@ namespace DBHelper
         /// <summary>
         /// 当前系统数据库的类型
         /// </summary>
-        public static MyDbType DbType = MyDbType.None;
+        public static MyDbType DbType = MyDbType.SqlServer;
         public static void  InitConnectionString(string constr)
         {
             ConnctionString = constr;

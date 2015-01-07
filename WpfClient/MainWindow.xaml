@@ -1,0 +1,26 @@
+﻿<Window x:Class="WpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="clr-namespace:WpfClient.Models"
+        Title="{Binding Title}" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ToolBarPanel Grid.Row="0" Height="30"  Orientation="Horizontal">
+            <Button Content="Add" />
+            <Button Content="Edit" />
+            <Button Content="Remove" />
+            <Button Content="Profile" Command="{Binding ProfileCommand}" />
+        </ToolBarPanel>
+        <DataGrid Grid.Row="1" AutoGenerateColumns="True"
+                  ItemsSource="{Binding UserDiarys}">            
+        </DataGrid>
+        <StatusBar Grid.Row="2">
+            <TextBlock Text="{Binding CurrentUserName}"/>
+            <TextBlock Text="{Binding CurrentDate}"/>
+        </StatusBar>
+    </Grid>
+</Window>

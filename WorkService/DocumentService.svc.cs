@@ -71,7 +71,7 @@ namespace WorkService
                 Message = ok ? "登陆成功" : "登陆失败"
             };
         }
-        
+
         public ServerMessage AddDiary(int userId, string title, string content)
         {
             var failResult = new ServerMessage()
@@ -105,14 +105,22 @@ namespace WorkService
             return failResult;
         }
 
-
-        public void GetSessionId()
+        public void GetUserDiarys(string userNum, string currentpage)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            callback.CallbackAction(OperationContext.Current.SessionId);
+            Model.viewUserDiarys diarys = new viewUserDiarys();
+            diarys.Where(w => w.number == userNum);
+            PagerList<viewUserDiarys> ds = diarys.SelectPageList(currentpage, "20", "date", "0", "number");
+            callback.ReturnUserDiarys(ds);
         }
 
-
-      
+        public void GetUserInfo(string number)
+        {
+            MyDBHelper.InitConnectionString();
+            IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
+            codeUsers user = new codeUsers().Select(u => u.number == number);
+            callback.ReturnUserInfo(user);
+        }
     }
+
 }

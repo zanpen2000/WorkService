@@ -20,8 +20,7 @@ namespace ClientDemo
 
             ServiceCaller.Execute<IDocumentService>(context, svc =>
             {
-
-                svc.GetSessionId();
+                svc.GetUserInfo("042");
             });
 
           
@@ -31,7 +30,7 @@ namespace ClientDemo
             using (DuplexChannelFactory<IDocumentService> channel = new DuplexChannelFactory<IDocumentService>(context, binding, new EndpointAddress("http://localhost:8008/DocumentService.svc")))
             {
                 IDocumentService proxy = channel.CreateChannel();
-                proxy.GetSessionId();
+                proxy.GetUserInfo("042");
                 //Console.WriteLine("output is :" + );
                 //Console.Read();
             }
@@ -41,9 +40,14 @@ namespace ClientDemo
     }
     public class ClientCallback : IDocumentCallback
     {
-        public void CallbackAction(string sessionId)
+        public void ReturnUserInfo(Model.codeUsers user)
         {
-            Console.WriteLine(sessionId);
+            Console.WriteLine(user.name);
+        }
+
+        public void ReturnUserDiarys(IEnumerable<Model.viewUserDiarys> diarys)
+        {
+            
         }
     }
 }
