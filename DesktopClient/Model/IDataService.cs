@@ -5,8 +5,13 @@ using System.Text;
 
 namespace DesktopClient.Model
 {
-    public interface IDataService:ServiceContract.IDocumentCallback
+    public interface IDataService : ServiceContract.IDocumentCallback
     {
         void GetData(Action<DataItem, Exception> callback);
+
+
+        void GetUserInfo();
+
+
     }
 }

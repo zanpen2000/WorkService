@@ -50,5 +50,7 @@ namespace ClientDemo
         {
             
         }
+
+        public event EventHandler<UserInfo> OnGetUserInfo;
     }
 }

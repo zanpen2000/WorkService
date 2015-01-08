@@ -13,14 +13,22 @@ namespace DesktopClient.Design
             callback(item, null);
         }
 
-        public void ReturnUserInfo(DBModel.codeUsers user)
-        {
-            throw new NotImplementedException();
-        }
-
         public void ReturnUserDiarys(System.Collections.Generic.IEnumerable<DBModel.viewUserDiarys> diarys)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+        }
+
+        public void GetUserInfo()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public event EventHandler<ServiceContract.UserInfo> OnGetUserInfo;
+
+
+        public void ReturnUserInfo(DBModel.codeUsers user)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

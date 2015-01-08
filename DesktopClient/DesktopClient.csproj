@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.0.2.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -107,6 +108,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -115,6 +117,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppLayer\AppLayer.csproj">
+      <Project>{79174bc8-666b-4dbe-9398-871e8bc9cefb}</Project>
+      <Name>AppLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\DBModel.csproj">
       <Project>{74a929aa-4561-4bf0-b842-30b9f4cac052}</Project>
       <Name>DBModel</Name>

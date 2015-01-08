@@ -119,5 +119,7 @@ namespace WpfClient.Models
                 getDiarys(number);
             });
         }
+
+        public event EventHandler<UserInfo> OnGetUserInfo;
     }
 }

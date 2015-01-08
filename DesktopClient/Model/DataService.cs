@@ -1,6 +1,8 @@
 ﻿
+using AppLayer;
 using DBModel;
 using System;
+using System.ServiceModel;
 
 namespace DesktopClient.Model
 {
@@ -8,20 +10,34 @@ namespace DesktopClient.Model
     {
         public void GetData(Action<DataItem, Exception> callback)
         {
-            // Use this to connect to the actual data service
-
             var item = new DataItem("Welcome to MVVM Light");
             callback(item, null);
         }
 
-        public void ReturnUserInfo(codeUsers user)
-        {
-            throw new NotImplementedException();
-        }
-
         public void ReturnUserDiarys(System.Collections.Generic.IEnumerable<viewUserDiarys> diarys)
         {
-            throw new NotImplementedException();
+
         }
+
+        public void GetUserInfo()
+        {
+            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            {
+                var userNumber = AppSettings.Get("Number");
+                InstanceContext context = new InstanceContext(this);
+                ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+                {
+                    net.GetUserInfo(userNumber);
+                });
+            });
+
+        }
+
+        public void ReturnUserInfo(codeUsers user)
+        {
+            OnGetUserInfo(this, new ServiceContract.UserInfo(user));
+        }
+
+        public event EventHandler<ServiceContract.UserInfo> OnGetUserInfo;
     }
 }
