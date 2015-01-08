@@ -23,11 +23,11 @@ namespace ClientDemo
                 svc.GetUserInfo("042");
             });
 
-          
-            WSDualHttpBinding binding = new WSDualHttpBinding();
-            //the Guid ensure the client call back address is unique if there are more than one client using the same base callback address
-            binding.ClientBaseAddress = new Uri(string.Format("{0}{1}", "http://localhost:7799/Callback/", Guid.NewGuid().ToString()));
-            using (DuplexChannelFactory<IDocumentService> channel = new DuplexChannelFactory<IDocumentService>(context, binding, new EndpointAddress("http://localhost:8008/DocumentService.svc")))
+
+            NetTcpBinding binding = new NetTcpBinding();
+            //binding.Security.Mode = SecurityMode.None;
+            using (DuplexChannelFactory<IDocumentService> channel = 
+                new DuplexChannelFactory<IDocumentService>(context, binding, new EndpointAddress("net.tcp://localhost:8008/DocumentService.svc")))
             {
                 IDocumentService proxy = channel.CreateChannel();
                 proxy.GetUserInfo("042");
