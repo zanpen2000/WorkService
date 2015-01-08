@@ -101,9 +101,9 @@
       <Project>{f290be0b-180d-478e-88cb-b496c3c5843f}</Project>
       <Name>DBHelper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\DBModel.csproj">
       <Project>{74a929aa-4561-4bf0-b842-30b9f4cac052}</Project>
-      <Name>Model</Name>
+      <Name>DBModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceContract\ServiceContract.csproj">
       <Project>{2947999f-7937-4049-8751-a6e12c293e29}</Project>

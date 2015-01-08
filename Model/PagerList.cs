@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Model
+namespace DBModel
 {
     /// <summary>
     /// 用于返回DataGrid控件数据源的泛型类

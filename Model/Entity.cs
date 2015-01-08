@@ -13,7 +13,7 @@ using System.Transactions;
 using System.Windows.Input;
 using System.Runtime.Serialization;
 
-namespace Model
+namespace DBModel
 {
     /// <summary>
     /// 数据库实体类的基类

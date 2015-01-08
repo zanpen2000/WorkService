@@ -11,7 +11,7 @@
 <#@import namespace="System.Text" #>
 
 <# 
-  string NameSpace="Model";
+  string NameSpace="DBModel";
   string Server=".";
   string DataBase="WorkService"; 
   string UserName="sa"; 

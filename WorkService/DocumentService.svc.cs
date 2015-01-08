@@ -6,9 +6,10 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using DBHelper;
-using Model;
+
 using ServiceContract;
 using ServiceContract.Models;
+using DBModel;
 
 namespace WorkService
 {
@@ -62,7 +63,6 @@ namespace WorkService
 
         public ServerMessage Login(string mail, string pwd)
         {
-            MyDBHelper.InitConnectionString();
             codeUsers user = new codeUsers();
             bool ok = user.SelectCount(u => u.mail == mail && u.mailpwd == pwd) > 0;
             return new ServerMessage()
@@ -108,7 +108,7 @@ namespace WorkService
         public void GetUserDiarys(string userNum, string currentpage)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            Model.viewUserDiarys diarys = new viewUserDiarys();
+            viewUserDiarys diarys = new viewUserDiarys();
             diarys.Where(w => w.number == userNum);
             PagerList<viewUserDiarys> ds = diarys.SelectPageList(currentpage, "20", "date", "0", "number");
             callback.ReturnUserDiarys(ds);
@@ -116,7 +116,6 @@ namespace WorkService
 
         public void GetUserInfo(string number)
         {
-            MyDBHelper.InitConnectionString();
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
             codeUsers user = new codeUsers().Select(u => u.number == number);
             callback.ReturnUserInfo(user);

@@ -1,4 +1,5 @@
 ﻿using AppLayer;
+using DBModel;
 using ServiceContract;
 using System;
 using System.Collections.Generic;
@@ -48,9 +49,9 @@ namespace WpfClient.Models
             }
         }
 
-        private ObservableCollection<Model.viewUserDiarys> userDiarys;
+        private ObservableCollection<viewUserDiarys> userDiarys;
 
-        public ObservableCollection<Model.viewUserDiarys> UserDiarys
+        public ObservableCollection<viewUserDiarys> UserDiarys
         {
             get { return userDiarys; }
             set
@@ -64,13 +65,13 @@ namespace WpfClient.Models
 
         public string number { get; set; }
 
-        public Model.EntityEventCommand ProfileCommand { get; set; }
+        public EntityEventCommand ProfileCommand { get; set; }
 
         public MainViewModel()
         {
             this.Title = "工作日志";
             number = AppSettings.Get("Number");
-            ProfileCommand = new Model.EntityEventCommand(init);
+            ProfileCommand = new EntityEventCommand(init);
             currentPage = "1";
         }
 
@@ -99,12 +100,12 @@ namespace WpfClient.Models
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public void ReturnUserDiarys(IEnumerable<Model.viewUserDiarys> diarys)
+        public void ReturnUserDiarys(IEnumerable<viewUserDiarys> diarys)
         {
-            UserDiarys = new ObservableCollection<Model.viewUserDiarys>(diarys);
+            UserDiarys = new ObservableCollection<viewUserDiarys>(diarys);
         }
 
-        public void ReturnUserInfo(Model.codeUsers user)
+        public void ReturnUserInfo(codeUsers user)
         {
             this.CurrentUserName = user.name;
             this.Title = string.Format("{0}({1})", this.Title, user.name);

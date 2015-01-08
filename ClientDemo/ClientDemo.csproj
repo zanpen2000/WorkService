@@ -55,9 +55,9 @@
       <Project>{79174bc8-666b-4dbe-9398-871e8bc9cefb}</Project>
       <Name>AppLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\DBModel.csproj">
       <Project>{74a929aa-4561-4bf0-b842-30b9f4cac052}</Project>
-      <Name>Model</Name>
+      <Name>DBModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceContract\ServiceContract.csproj">
       <Project>{2947999f-7937-4049-8751-a6e12c293e29}</Project>

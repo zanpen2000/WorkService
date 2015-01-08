@@ -16,7 +16,7 @@ namespace ServiceContract
         string GetData(string value);
 
         [OperationContract]
-        Models.ServerMessage RegisNewUser(Model.codeUsers user);
+        Models.ServerMessage RegisNewUser(DBModel.codeUsers user);
 
         [OperationContract(IsInitiating = true)]
         Models.ServerMessage Login(string user, string pwd);

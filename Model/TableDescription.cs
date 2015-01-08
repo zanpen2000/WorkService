@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Model
+namespace DBModel
 {
     /// <summary>
     /// 用于描述实体类字段和数据库字段的对应关系

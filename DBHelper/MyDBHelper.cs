@@ -10,6 +10,11 @@ namespace DBHelper
 {
     public static class MyDBHelper
     {
+        static MyDBHelper()
+        {
+            InitConnectionString(); 
+        }
+
         public static string ConnctionString = "";
         private static IDBHelper dbhelper = null;
         /// <summary>

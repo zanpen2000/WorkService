@@ -7,6 +7,7 @@ using AppLayer;
 using WorkService;
 using System.ServiceModel;
 using ServiceContract;
+using DBModel;
 
 
 namespace ClientDemo
@@ -40,12 +41,12 @@ namespace ClientDemo
     }
     public class ClientCallback : IDocumentCallback
     {
-        public void ReturnUserInfo(Model.codeUsers user)
+        public void ReturnUserInfo(codeUsers user)
         {
             Console.WriteLine(user.name);
         }
 
-        public void ReturnUserDiarys(IEnumerable<Model.viewUserDiarys> diarys)
+        public void ReturnUserDiarys(IEnumerable<viewUserDiarys> diarys)
         {
             
         }
