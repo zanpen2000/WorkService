@@ -105,12 +105,6 @@ namespace WpfClient.Models
             UserDiarys = new ObservableCollection<viewUserDiarys>(diarys);
         }
 
-        public void ReturnUserInfo(codeUsers user)
-        {
-            this.CurrentUserName = user.name;
-            this.Title = string.Format("{0}({1})", this.Title, user.name);
-        }
-
         public void init()
         {
             System.Threading.Tasks.Task.Factory.StartNew(() =>
@@ -120,6 +114,16 @@ namespace WpfClient.Models
             });
         }
 
-        public event EventHandler<UserInfo> OnGetUserInfo;
+        public event EventHandler<UserInfoEventArgs> OnGetUserInfo;
+
+
+        public void ReturnUserInfo(viewUserInfo user)
+        {
+            this.CurrentUserName = user.name;
+            this.Title = string.Format("{0}({1})", this.Title, user.name);
+        }
+
+
+        public event EventHandler<DiarysEventArgs> OnGetUserDiarys;
     }
 }

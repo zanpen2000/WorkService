@@ -7,11 +7,10 @@ namespace DesktopClient.Model
 {
     public interface IDataService : ServiceContract.IDocumentCallback
     {
-        void GetData(Action<DataItem, Exception> callback);
-
-
         void GetUserInfo();
 
+        void GetDiarys(string page);
 
+        void LoadDiary(int id);
     }
 }

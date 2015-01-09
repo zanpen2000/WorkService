@@ -28,17 +28,9 @@ namespace DesktopClient.ViewModel
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-            }
-
+            SimpleIoc.Default.Register<IDataService, DataService>();
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<DiaryViewModel>();
         }
 
         /// <summary>
@@ -52,6 +44,20 @@ namespace DesktopClient.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Diary property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public DiaryViewModel Diary
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DiaryViewModel>();
             }
         }
 

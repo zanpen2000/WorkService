@@ -13,9 +13,6 @@ namespace ServiceContract
     public interface IDocumentService
     {
         [OperationContract]
-        string GetData(string value);
-
-        [OperationContract]
         Models.ServerMessage RegisNewUser(DBModel.codeUsers user);
 
         [OperationContract(IsInitiating = true)]
@@ -24,19 +21,13 @@ namespace ServiceContract
         [OperationContract]
         Models.ServerMessage AddDiary(int userId, string title, string content);
 
-        [OperationContract(IsInitiating = true)]
-        string GetResult();
-
-        [OperationContract(IsInitiating = true)]
-        void SetResult(int value);
-
         [OperationContract]
         void GetUserInfo(string number);
 
         [OperationContract]
         void GetUserDiarys(string userNum, string currentpage);
 
-
-        
+         [OperationContract]
+        void LoadDiary(int id);
     }
 }

@@ -41,16 +41,20 @@ namespace ClientDemo
     }
     public class ClientCallback : IDocumentCallback
     {
-        public void ReturnUserInfo(codeUsers user)
-        {
-            Console.WriteLine(user.name);
-        }
-
         public void ReturnUserDiarys(IEnumerable<viewUserDiarys> diarys)
         {
             
         }
 
-        public event EventHandler<UserInfo> OnGetUserInfo;
+        public event EventHandler<UserInfoEventArgs> OnGetUserInfo;
+
+
+        public void ReturnUserInfo(viewUserInfo user)
+        {
+            Console.WriteLine(user.name);
+        }
+
+
+        public event EventHandler<DiarysEventArgs> OnGetUserDiarys;
     }
 }

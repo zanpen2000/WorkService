@@ -16,23 +16,6 @@ namespace WorkService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class DocumentService : IDocumentService
     {
-        private int nCount = 0;
-
-        public void SetResult(int value)
-        {
-            nCount = value;
-        }
-
-        public string GetResult()
-        {
-            return (nCount).ToString();
-        }
-
-        public string GetData(string value)
-        {
-            return string.Format("You entered: {0}", value);
-        }
-
         public ServerMessage RegisNewUser(codeUsers user)
         {
             if (string.IsNullOrEmpty(user.mail))
@@ -110,15 +93,25 @@ namespace WorkService
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
             viewUserDiarys diarys = new viewUserDiarys();
             diarys.Where(w => w.number == userNum);
-            PagerList<viewUserDiarys> ds = diarys.SelectPageList(currentpage, "20", "date", "0", "number");
+            PagerList<viewUserDiarys> ds = diarys.SelectPageList(currentpage, "20", "lastsent", "0", "number");
             callback.ReturnUserDiarys(ds);
         }
 
         public void GetUserInfo(string number)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            codeUsers user = new codeUsers().Select(u => u.number == number);
+            viewUserInfo user = new viewUserInfo().Select(u => u.number == number);
             callback.ReturnUserInfo(user);
+        }
+
+
+        public void LoadDiary(int id)
+        {
+            IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
+            domainDiary diarys = new domainDiary();
+            diarys.Where(w=>w.id == id);
+            var ds =diarys.Select();
+            callback.ReturnUserDiary(ds);
         }
     }
 

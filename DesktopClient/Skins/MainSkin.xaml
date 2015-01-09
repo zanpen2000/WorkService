@@ -1,4 +1,68 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Foreground" Value="#0080FF"></Setter>
+        <Setter Property="Margin" Value="20,0,0,10"></Setter>
+        <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+    </Style>
+
+    <Style x:Key="sysTitle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="30"></Setter>
+        <Setter Property="Margin" Value="10,10,0,0"></Setter>
+        <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+    </Style>
+    <Style x:Key="loginTitle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15"></Setter>
+        <Setter Property="Foreground" Value="#0080FF"></Setter>
+        <Setter Property="Margin" Value="20,0,0,10"></Setter>
+        <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+    </Style>
+    <Style x:Key="fileManagementTile" TargetType="TextBlock">
+        <Setter Property="Margin" Value="70,0,0,0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="TextAlignment" Value="Center"></Setter>
+        <Setter Property="FontSize" Value="17"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+    </Style>
+    <Style x:Key="treeNodeText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontWeight" Value="Bold"></Setter>
+    </Style>
+    <Style x:Key="settingLabel" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Margin" Value="30,0,0,0"></Setter>
+        <Setter Property="FontSize" Value="13"></Setter>
+    </Style>
+    <Style x:Key="fileSearchResult" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="TextWrapping" Value="NoWrap"></Setter>
+        <Setter Property="Margin" Value="10,0,0,0"></Setter>
+        <Setter Property="FontSize" Value="13"></Setter>
+    </Style>
+    <Style x:Key="underlingTextblock" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextDecorations">
+            <Setter.Value>
+                <TextDecorationCollection>
+                    <TextDecoration PenOffset="2" PenOffsetUnit="Pixel" PenThicknessUnit="Pixel">
+                        <TextDecoration.Pen>
+                            <Pen Thickness="1">
+                                <Pen.Brush>
+                                    <SolidColorBrush Color="Black"></SolidColorBrush>
+                                </Pen.Brush>
+                            </Pen>
+                        </TextDecoration.Pen>
+                    </TextDecoration>
+                </TextDecorationCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

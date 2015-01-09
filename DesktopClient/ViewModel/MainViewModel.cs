@@ -1,5 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using DesktopClient.Model;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight.Command;
 
 namespace DesktopClient.ViewModel
 {
@@ -74,62 +77,104 @@ namespace DesktopClient.ViewModel
         }
 
         /// <summary>
-        /// The <see cref="CurrentUserNumber" /> property's name.
+        /// The <see cref="UserInfo" /> property's name.
         /// </summary>
-        public const string CurrentUserNumberPropertyName = "CurrentUserNumber";
+        public const string UserInfoPropertyName = "UserInfo";
 
-        private string _currentUserNumber = "";
+        private DBModel.viewUserInfo _userInfo = null;
 
         /// <summary>
-        /// Sets and gets the CurrentUserNumber property.
+        /// Sets and gets the UserInfo property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public string CurrentUserNumber
+        public DBModel.viewUserInfo UserInfo
         {
             get
             {
-                return _currentUserNumber;
+                return _userInfo;
             }
 
             set
             {
-                if (_currentUserNumber == value)
+                if (_userInfo == value)
                 {
                     return;
                 }
 
-                _currentUserNumber = value;
-                RaisePropertyChanged(CurrentUserNumberPropertyName);
+                _userInfo = value;
+                RaisePropertyChanged(UserInfoPropertyName);
             }
         }
 
         /// <summary>
-        /// The <see cref="CurrentUserName" /> property's name.
+        /// The <see cref="Diarys" /> property's name.
         /// </summary>
-        public const string CurrentUserNamePropertyName = "CurrentUserName";
+        public const string DiarysPropertyName = "Diarys";
 
-        private string _currentUserName = "";
+
+
+        private ObservableCollection<DBModel.viewUserDiarys> _diarys = null;
 
         /// <summary>
-        /// Sets and gets the CurrentUserName property.
+        /// Sets and gets the Diarys property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public string CurrentUserName
+        public ObservableCollection<DBModel.viewUserDiarys> Diarys
         {
             get
             {
-                return _currentUserName;
+                return _diarys;
             }
 
             set
             {
-                if (_currentUserName == value)
+                if (_diarys == value)
                 {
                     return;
                 }
 
-                _currentUserName = value;
-                RaisePropertyChanged(CurrentUserNamePropertyName);
+                _diarys = value;
+                RaisePropertyChanged(DiarysPropertyName);
+            }
+        }
+
+        private RelayCommand _addCommand;
+
+        /// <summary>
+        /// Gets the AddCommand.
+        /// </summary>
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return _addCommand
+                    ?? (_addCommand = new RelayCommand(
+                    () =>
+                    {
+                        DiaryView dv = new DiaryView();
+                        if ((bool)dv.ShowDialog())
+                        {
+
+                        }
+                    }));
+            }
+        }
+
+        private RelayCommand<int> _insertCommand;
+
+        /// <summary>
+        /// Gets the InsertCommand.
+        /// </summary>
+        public RelayCommand<int> InsertCommand
+        {
+            get
+            {
+                return _insertCommand
+                    ?? (_insertCommand = new RelayCommand<int>(
+                    p =>
+                    {
+
+                    }));
             }
         }
 
@@ -141,11 +186,18 @@ namespace DesktopClient.ViewModel
             _dataService = dataService;
             _dataService.OnGetUserInfo += _dataService_OnGetUserInfo;
             _dataService.GetUserInfo();
+            _dataService.OnGetUserDiarys += _dataService_OnGetUserDiarys;
+            _dataService.GetDiarys(CurrentPage);
         }
 
-        void _dataService_OnGetUserInfo(object sender, ServiceContract.UserInfo e)
+        void _dataService_OnGetUserDiarys(object sender, ServiceContract.DiarysEventArgs e)
         {
-            WelcomeTitle = e.User.name;
+            this.Diarys = new ObservableCollection<DBModel.viewUserDiarys>(e.Diarys);
+        }
+
+        void _dataService_OnGetUserInfo(object sender, ServiceContract.UserInfoEventArgs e)
+        {
+            this.UserInfo = e.UserInfo;
         }
 
         ////public override void Cleanup()
