@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        DataContext="{Binding DiaryViewModel, Source={StaticResource Locator}}">
+        DataContext="{Binding Diary, Source={StaticResource Locator}}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -19,7 +19,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical" >
                 <TextBlock Text="名称"/>
-                <TextBox Text="{Binding ItemName}"/>
+                <TextBox Text="{Binding DiaryItem.item}"/>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -27,10 +27,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="说明" Grid.Row="0"/>
-                <TextBox Text="{Binding ItemText}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1"/>
+                <TextBox Text="{Binding DiaryItem.dtext}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1"/>
             </Grid>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <Button Content="插入" Command="{Binding ItemInsert}"/>
+            <StackPanel Grid.Row="2" >
+                <Button Content="插入" Command="{Binding InsertCommand}"/>
             </StackPanel>
         </Grid>
         <DataGrid Grid.Column="0" ItemsSource="{Binding DiaryItems}"/>

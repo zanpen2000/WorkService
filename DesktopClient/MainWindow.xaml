@@ -43,6 +43,7 @@
         <DataGrid Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding Diarys}" />
         <StackPanel Grid.Row="2">
             <Button Content="Add" Command="{Binding AddCommand}"/>
+            <Button Content="Close" Command="{Binding CloseCommand}"/>
         </StackPanel>
 
     </Grid>

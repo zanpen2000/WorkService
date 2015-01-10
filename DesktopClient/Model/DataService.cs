@@ -8,20 +8,18 @@ namespace DesktopClient.Model
 {
     public class DataService : IDataService
     {
-        public event EventHandler<ServiceContract.UserInfoEventArgs> OnGetUserInfo;
-        public event EventHandler<ServiceContract.DiarysEventArgs> OnGetUserDiarys;
+        public event EventHandler<ServiceContract.UserInfoEventArgs> OnGetUserInfo = delegate { };
+        public event EventHandler<ServiceContract.ViewDiarysEventArgs> OnGetUserDiarys = delegate { };
+        public event EventHandler<ServiceContract.DiarysEventArgs> OnLoadDiarys = delegate { };
         
 
         public void GetUserInfo()
         {
-            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            var userNumber = AppSettings.Get("Number");
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
-                var userNumber = AppSettings.Get("Number");
-                InstanceContext context = new InstanceContext(this);
-                ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
-                {
-                    net.GetUserInfo(userNumber);
-                });
+                net.GetUserInfo(userNumber);
             });
         }
 
@@ -32,31 +30,25 @@ namespace DesktopClient.Model
 
         public void GetDiarys(string page)
         {
-            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            var userNumber = AppSettings.Get("Number");
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
-                var userNumber = AppSettings.Get("Number");
-                InstanceContext context = new InstanceContext(this);
-                ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
-                {
-                    net.GetUserDiarys(userNumber, page);
-                });
+                net.GetUserDiarys(userNumber, page);
             });
         }
         public void ReturnUserDiarys(System.Collections.Generic.IEnumerable<viewUserDiarys> diarys)
         {
-            OnGetUserDiarys(this, new ServiceContract.DiarysEventArgs(diarys));
+            OnGetUserDiarys(this, new ServiceContract.ViewDiarysEventArgs(diarys));
         }
 
         public void LoadDiary(int id)
         {
-            System.Threading.Tasks.Task.Factory.StartNew(() =>
+            var userNumber = AppSettings.Get("Number");
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
-                var userNumber = AppSettings.Get("Number");
-                InstanceContext context = new InstanceContext(this);
-                ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
-                {
-                    net.LoadDiary(id);
-                });
+                net.LoadDiary(id);
             });
         }
 
@@ -66,6 +58,33 @@ namespace DesktopClient.Model
         public void ReturnUserDiary(domainDiary diary)
         {
             OnLoadDiary(this, new ServiceContract.DiaryEventArgs(diary));
+        }
+
+
+        public void InsertDiary(domainDiary diary)
+        {
+            var userNumber = AppSettings.Get("Number");
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+            {
+                net.InsertDiary(diary);
+            });
+           
+        }
+
+        public void ReturnDiaryItems(System.Collections.Generic.IEnumerable<domainDiary> items)
+        {
+            OnLoadDiarys(this, new ServiceContract.DiarysEventArgs(items));
+        }
+
+        public void LoadDiaryItems(int userId, DateTime date)
+        {
+            var userNumber = AppSettings.Get("Number");
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+            {
+                net.LoadDiarys(userId, date);
+            });
         }
     }
 }

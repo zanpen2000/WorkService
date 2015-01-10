@@ -160,20 +160,22 @@ namespace DesktopClient.ViewModel
             }
         }
 
-        private RelayCommand<int> _insertCommand;
+    
+
+        private RelayCommand _closeCommand;
 
         /// <summary>
-        /// Gets the InsertCommand.
+        /// Gets the CloseCommand.
         /// </summary>
-        public RelayCommand<int> InsertCommand
+        public RelayCommand CloseCommand
         {
             get
             {
-                return _insertCommand
-                    ?? (_insertCommand = new RelayCommand<int>(
-                    p =>
+                return _closeCommand
+                    ?? (_closeCommand = new RelayCommand(
+                    () =>
                     {
-
+                        App.Current.Shutdown();   
                     }));
             }
         }
@@ -190,7 +192,7 @@ namespace DesktopClient.ViewModel
             _dataService.GetDiarys(CurrentPage);
         }
 
-        void _dataService_OnGetUserDiarys(object sender, ServiceContract.DiarysEventArgs e)
+        void _dataService_OnGetUserDiarys(object sender, ServiceContract.ViewDiarysEventArgs e)
         {
             this.Diarys = new ObservableCollection<DBModel.viewUserDiarys>(e.Diarys);
         }
