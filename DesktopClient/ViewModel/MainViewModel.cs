@@ -3,6 +3,7 @@ using DesktopClient.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace DesktopClient.ViewModel
 {
@@ -151,16 +152,13 @@ namespace DesktopClient.ViewModel
                     ?? (_addCommand = new RelayCommand(
                     () =>
                     {
-                        DiaryView dv = new DiaryView();
-                        if ((bool)dv.ShowDialog())
-                        {
+                        Messenger.Default.Send<object>(null, "ShowDiaryView");
 
-                        }
                     }));
             }
         }
 
-    
+
 
         private RelayCommand _closeCommand;
 
@@ -175,7 +173,7 @@ namespace DesktopClient.ViewModel
                     ?? (_closeCommand = new RelayCommand(
                     () =>
                     {
-                        App.Current.Shutdown();   
+                        App.Current.Shutdown();
                     }));
             }
         }
@@ -187,8 +185,9 @@ namespace DesktopClient.ViewModel
         {
             _dataService = dataService;
             _dataService.OnGetUserInfo += _dataService_OnGetUserInfo;
-            _dataService.GetUserInfo();
             _dataService.OnGetUserDiarys += _dataService_OnGetUserDiarys;
+
+            _dataService.GetUserInfo();
             _dataService.GetDiarys(CurrentPage);
         }
 

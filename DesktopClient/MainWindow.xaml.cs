@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using DesktopClient.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace DesktopClient
 {
@@ -15,6 +16,18 @@ namespace DesktopClient
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
+            Messenger.Default.Register<object>(this, "ShowDiaryView", ShowDiaryView);
+            this.Unloaded += MainWindow_Unloaded;
+        }
+
+        void MainWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Unregister(this);
+        }
+
+        private void ShowDiaryView(object obj)
+        {
+            new DiaryView().Show();
         }
     }
 }
