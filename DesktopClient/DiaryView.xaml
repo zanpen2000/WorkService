@@ -33,6 +33,16 @@
                 <Button Content="插入" Command="{Binding InsertCommand}"/>
             </StackPanel>
         </Grid>
-        <DataGrid Grid.Column="0" ItemsSource="{Binding DiaryItems}"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ProgressBar Grid.Row="0" x:Name="pbar" Height="10" Visibility="Collapsed"/>
+            <DataGrid Grid.Row="1" x:Name="dataGrid" ItemsSource="{Binding DiaryItems}"/>
+            <Button Grid.Row="2" Content="Save" Command="{Binding SaveDiaryCommand}"/>
+        </Grid>
+        
     </Grid>
 </Window>

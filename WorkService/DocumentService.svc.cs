@@ -16,7 +16,7 @@ namespace WorkService
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class DocumentService : IDocumentService
     {
-      
+
 
         public void GetUserDiarys(string userNum, string currentpage)
         {
@@ -44,17 +44,6 @@ namespace WorkService
             callback.ReturnUserDiary(ds);
         }
 
-        public void InsertDiary(DBModel.domainDiary diary)
-        {
-            diary.Insert();
-            IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            domainDiary diarys = new domainDiary();
-            diarys.Where(w => w.userId == diary.userId && w.date == diary.date);
-            var ds = diarys.SelectList();
-            callback.ReturnDiaryItems(ds);
-        }
-
-
         public void LoadDiarys(int userid, DateTime date)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
@@ -62,6 +51,20 @@ namespace WorkService
             diarys.Where(w => w.userId == userid && w.date == date);
             var ds = diarys.SelectList();
             callback.ReturnDiaryItems(ds);
+        }
+
+        public void InsertDiaryItems(IEnumerable<domainDiary> diaryItems)
+        {
+            IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
+
+            int i = 0;
+            foreach (var item in diaryItems)
+            {
+                item.Insert();
+                i++;
+                int percent = (int)(((double)i / (double)((long)diaryItems.Count())) * 100);
+                callback.ReturnDiaryItemInsertPercent(percent);
+            }
         }
     }
 

@@ -24,7 +24,7 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <WrapPanel x:Name="LayoutUserInfo" Grid.Row="0">
+        <WrapPanel x:Name="LayoutUserInfo" Grid.Row="0" >
             <TextBlock Text="编号："/>
             <TextBlock Text="{Binding UserInfo.number}" />
             <TextBlock Text="姓名：" />
@@ -41,10 +41,11 @@
             <TextBlock Text="{Binding UserInfo.mailto}" />
         </WrapPanel>
         <DataGrid Grid.Row="1" AutoGenerateColumns="True" ItemsSource="{Binding Diarys}" />
-        <StackPanel Grid.Row="2">
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Content="Add" Command="{Binding AddCommand}"/>
             <Button Content="Close" Command="{Binding CloseCommand}"/>
         </StackPanel>
+        
 
     </Grid>
 </Window>

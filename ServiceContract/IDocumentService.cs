@@ -24,6 +24,6 @@ namespace ServiceContract
         void LoadDiarys(int userid, DateTime date);
 
         [OperationContract]
-        void InsertDiary(DBModel.domainDiary diary);
+        void InsertDiaryItems(IEnumerable<DBModel.domainDiary> diaryItems);
     }
 }

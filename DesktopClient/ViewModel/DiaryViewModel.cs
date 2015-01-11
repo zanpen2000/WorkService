@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using AppLayer;
 
 namespace DesktopClient.ViewModel
 {
@@ -18,6 +19,7 @@ namespace DesktopClient.ViewModel
     {
         private readonly IDataService _dataService;
 
+        #region Property and Fields
         public int DiaryId { get; set; }
 
         /// <summary>
@@ -80,6 +82,10 @@ namespace DesktopClient.ViewModel
             }
         }
 
+        public RelayCommand InsertCommand { get; set; }
+        public RelayCommand SaveDiaryCommand { get; set; }
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the DiaryViewModel class.
         /// </summary>
@@ -96,9 +102,22 @@ namespace DesktopClient.ViewModel
             }
 
             _dataService.OnLoadDiarys += _dataService_OnLoadDiarys;
-            
+
             InsertCommand = new RelayCommand(_insertExecute);
+            SaveDiaryCommand = new RelayCommand(_saveDiaryExecute);
             DiaryItem = new DBModel.domainDiary();
+
+            _dataService.OnDiaryItemsInsert += _dataService_OnDiaryItemsInsert;
+        }
+
+        void _dataService_OnDiaryItemsInsert(object sender, ServiceContract.DiaryItemsInsertEventArgs e)
+        {
+            Messenger.Default.Send<int>(e.Percent, "ShowInsertProgress");
+        }
+
+        private void _saveDiaryExecute()
+        {
+            _dataService.InsertDiaryItems(DiaryItems);
         }
 
         private void _insertExecute()
@@ -107,12 +126,9 @@ namespace DesktopClient.ViewModel
             DiaryItem.date = DateTime.Now.Date;
             DiaryItem.valid = true;
             DiaryItem.fileId = 0;
-            _dataService.InsertDiary(DiaryItem);
-           
+            var item = DiaryItem.DeepCopy();
+            DiaryItems.Add(item);
         }
-
-       
-
 
         void _dataService_OnLoadDiarys(object sender, ServiceContract.DiarysEventArgs e)
         {
@@ -123,11 +139,5 @@ namespace DesktopClient.ViewModel
         {
             this.DiaryItem = e.Diary;
         }
-
-        public RelayCommand InsertCommand { get; set; }
-
-
-
-
     }
 }

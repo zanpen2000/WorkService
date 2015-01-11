@@ -11,6 +11,8 @@ namespace DesktopClient.Model
         public event EventHandler<ServiceContract.UserInfoEventArgs> OnGetUserInfo = delegate { };
         public event EventHandler<ServiceContract.ViewDiarysEventArgs> OnGetUserDiarys = delegate { };
         public event EventHandler<ServiceContract.DiarysEventArgs> OnLoadDiarys = delegate { };
+        public event EventHandler<ServiceContract.DiaryEventArgs> OnLoadDiary;
+        public event EventHandler<ServiceContract.DiaryItemsInsertEventArgs> OnDiaryItemsInsert = delegate { };
         
 
         public void GetUserInfo()
@@ -52,24 +54,9 @@ namespace DesktopClient.Model
             });
         }
 
-
-        public event EventHandler<ServiceContract.DiaryEventArgs> OnLoadDiary;
-
         public void ReturnUserDiary(domainDiary diary)
         {
             OnLoadDiary(this, new ServiceContract.DiaryEventArgs(diary));
-        }
-
-
-        public void InsertDiary(domainDiary diary)
-        {
-            var userNumber = AppSettings.Get("Number");
-            InstanceContext context = new InstanceContext(this);
-            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
-            {
-                net.InsertDiary(diary);
-            });
-           
         }
 
         public void ReturnDiaryItems(System.Collections.Generic.IEnumerable<domainDiary> items)
@@ -85,6 +72,21 @@ namespace DesktopClient.Model
             {
                 net.LoadDiarys(userId, date);
             });
+        }
+
+        public void InsertDiaryItems(System.Collections.Generic.IEnumerable<domainDiary> diaryItems)
+        {
+            var userNumber = AppSettings.Get("Number");
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+            {
+                net.InsertDiaryItems(diaryItems);
+            });
+        }
+
+        public void ReturnDiaryItemInsertPercent(int percent)
+        {
+            OnDiaryItemsInsert(this, new ServiceContract.DiaryItemsInsertEventArgs(percent));
         }
     }
 }

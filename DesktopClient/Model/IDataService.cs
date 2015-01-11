@@ -15,6 +15,6 @@ namespace DesktopClient.Model
 
         void LoadDiaryItems(int userId, DateTime date);
 
-        void InsertDiary(DBModel.domainDiary diary);
+        void InsertDiaryItems(IEnumerable<DBModel.domainDiary> diaryItems);
     }
 }
