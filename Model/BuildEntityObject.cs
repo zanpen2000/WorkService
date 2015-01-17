@@ -234,6 +234,24 @@ namespace DBModel
 					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
 
 				
+					private System.String _status = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "status", FieldType = "nvarchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String status{ set { _status = value; changed("status");} get { return _status; } }
+
+				
+					private System.String _increaseTime = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "increaseTime", FieldType = "nvarchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String increaseTime{ set { _increaseTime = value; changed("increaseTime");} get { return _increaseTime; } }
+
+				
 					private System.Boolean _valid = true;
 					/// <summary>
 					/// 
@@ -412,6 +430,99 @@ namespace DBModel
 					[DataEntityFieldAttribute(FieldName = "text", FieldType = "nvarchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String text{ set { _text = value; changed("text");} get { return _text; } }
+
+				}
+
+
+				
+				/// <summary>
+				/// 
+				/// </summary>
+				[DataEntityAttribute("vDiarys")]
+				[DataContract]
+				public class vDiarys : Entity
+				{
+					
+			
+					private System.String _number = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "number", FieldType = "varchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataMember]
+					public System.String number{ set { _number = value; changed("number");} get { return _number; } }
+
+				
+					private System.String _name = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "name", FieldType = "nvarchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataMember]
+					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
+
+				
+					private System.String _depart = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "depart", FieldType = "nvarchar", FieldRemark = "", Length = 50, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataMember]
+					public System.String depart{ set { _depart = value; changed("depart");} get { return _depart; } }
+
+				
+					private System.String _item = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "item", FieldType = "nvarchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String item{ set { _item = value; changed("item");} get { return _item; } }
+
+				
+					private System.String _dtext = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "dtext", FieldType = "nvarchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String dtext{ set { _dtext = value; changed("dtext");} get { return _dtext; } }
+
+				
+					private System.DateTime _date = DateTime.Now;
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "date", FieldType = "date", FieldRemark = "", Length = 10, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataMember]
+					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
+
+				
+					private System.String _increaseTime = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "increaseTime", FieldType = "nvarchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String increaseTime{ set { _increaseTime = value; changed("increaseTime");} get { return _increaseTime; } }
+
+				
+					private System.String _status = "";
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "status", FieldType = "nvarchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String status{ set { _status = value; changed("status");} get { return _status; } }
+
+				
+					private System.Int32 _fileId = 0;
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "fileId", FieldType = "int", FieldRemark = "", Length = 10, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.Int32 fileId{ set { _fileId = value; changed("fileId");} get { return _fileId; } }
 
 				}
 
