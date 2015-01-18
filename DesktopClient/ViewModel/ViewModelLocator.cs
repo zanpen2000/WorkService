@@ -30,7 +30,8 @@ namespace DesktopClient.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IDataService, DataService>();
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<DiaryViewModel>();
+            //SimpleIoc.Default.Register<DiaryViewModel>();
+            SimpleIoc.Default.Register<ItemEditViewModel>();
         }
 
         /// <summary>
@@ -53,11 +54,11 @@ namespace DesktopClient.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public DiaryViewModel Diary
+        public ItemEditViewModel Diary
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<DiaryViewModel>();
+                return ServiceLocator.Current.GetInstance<ItemEditViewModel>();
             }
         }
 

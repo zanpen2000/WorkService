@@ -27,7 +27,7 @@ namespace DesktopClient
 
         private void ShowDiaryView(object obj)
         {
-            new DiaryView().Show();
+            new ItemEditView().Show();
         }
     }
 }

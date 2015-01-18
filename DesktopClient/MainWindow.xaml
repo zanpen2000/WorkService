@@ -40,10 +40,10 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <DataGrid Grid.Row="0" AutoGenerateColumns="True" ItemsSource="{Binding DiaryItems}"></DataGrid>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
                 <Button Content="Add" Command="{Binding AddCommand}"/>
                 <Button Content="Send Mail" Command="{Binding SendMailCommand}"/>
-                <Button Content="Close" Command="{Binding CloseCommand}"/>
+                <Button Content="Close" Command="{Binding CloseCommand}" />
             </StackPanel>
         </Grid>
 

@@ -67,14 +67,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ItemEditView.xaml.cs">
+      <DependentUpon>ItemEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="DiaryView.xaml.cs">
       <DependentUpon>DiaryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\DiaryViewModel.cs" />
+    <Compile Include="ViewModel\ItemEditViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="ItemEditView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
