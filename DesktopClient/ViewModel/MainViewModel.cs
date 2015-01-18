@@ -48,6 +48,67 @@ namespace DesktopClient.ViewModel
         }
 
         /// <summary>
+        /// The <see cref="DiaryItem" /> property's name.
+        /// </summary>
+        public const string DiaryItemPropertyName = "DiaryItem";
+
+        private DBModel.domainDiary _diaryItem;
+
+        /// <summary>
+        /// Sets and gets the DiaryItem property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public DBModel.domainDiary DiaryItem
+        {
+            get
+            {
+                return _diaryItem;
+            }
+
+            set
+            {
+                if (_diaryItem == value)
+                {
+                    return;
+                }
+
+                _diaryItem = value;
+                RaisePropertyChanged(DiaryItemPropertyName);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DiaryItems" /> property's name.
+        /// </summary>
+        public const string DiaryItemsPropertyName = "DiaryItems";
+
+        private ObservableCollection<DBModel.domainDiary> _diaryItems;
+
+        /// <summary>
+        /// Sets and gets the DiaryItems property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public ObservableCollection<DBModel.domainDiary> DiaryItems
+        {
+            get
+            {
+                return _diaryItems;
+            }
+
+            set
+            {
+                if (_diaryItems == value)
+                {
+                    return;
+                }
+
+                _diaryItems = value;
+                RaisePropertyChanged(DiaryItemsPropertyName);
+            }
+        }
+
+
+        /// <summary>
         /// The <see cref="CurrentPage" /> property's name.
         /// </summary>
         public const string CurrentPagePropertyName = "CurrentPage";
@@ -178,6 +239,9 @@ namespace DesktopClient.ViewModel
             }
         }
 
+        public RelayCommand SendMailCommand { get; set; }
+        public RelayCommand EditUserCommand { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -189,6 +253,27 @@ namespace DesktopClient.ViewModel
 
             _dataService.GetUserInfo();
             _dataService.GetDiarys(CurrentPage);
+
+            SendMailCommand = new RelayCommand(_sendMailExecute, _canSendMailExecute);
+            EditUserCommand = new RelayCommand(_EditUserExecute);
+        }
+
+        private void _EditUserExecute()
+        {
+            //throw new System.NotImplementedException();
+        }
+
+        private bool _canSendMailExecute()
+        {
+            return true;
+        }
+
+        private void _sendMailExecute()
+        {
+            /*
+             调用服务器的生成Excel日志并发送邮件服务
+             */
+            
         }
 
         void _dataService_OnGetUserDiarys(object sender, ServiceContract.ViewDiarysEventArgs e)
@@ -207,5 +292,7 @@ namespace DesktopClient.ViewModel
 
         ////    base.Cleanup();
         ////}
+
+        
     }
 }

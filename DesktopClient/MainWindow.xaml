@@ -24,6 +24,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -38,28 +39,32 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" AutoGenerateColumns="True" ItemsSource="{Binding Diarys}"></DataGrid>
+            <DataGrid Grid.Row="0" AutoGenerateColumns="True" ItemsSource="{Binding DiaryItems}"></DataGrid>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button Content="Add" Command="{Binding AddCommand}"/>
+                <Button Content="Send Mail" Command="{Binding SendMailCommand}"/>
                 <Button Content="Close" Command="{Binding CloseCommand}"/>
             </StackPanel>
         </Grid>
-        
-        <StackPanel x:Name="LayoutUserInfo" Grid.Row="2" Grid.Column="0">
-            <TextBlock Text="编号："/>
-            <TextBlock Text="{Binding UserInfo.number}" />
-            <TextBlock Text="姓名：" />
-            <TextBlock Text="{Binding UserInfo.name}"  />
-            <TextBlock Text="部门:" />
-            <TextBlock Text="{Binding UserInfo.departName}" />
-            <TextBlock Text="上次登陆:" />
-            <TextBlock Text="{Binding UserInfo.lastLogin}" />
-            <TextBlock Text="邮箱:" />
-            <TextBlock Text="{Binding UserInfo.mail}" />
-            <TextBlock Text="密码:" />
-            <TextBlock Text="{Binding UserInfo.mailpwd}" />
-            <TextBlock Text="发送到:" />
-            <TextBlock Text="{Binding UserInfo.mailto}" />
-        </StackPanel>
+
+        <StatusBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <StatusBarItem>
+                <WrapPanel >
+                    <TextBlock Text="编号："/>
+                    <TextBlock Text="{Binding UserInfo.number}" />
+                    <TextBlock Text="姓名：" />
+                    <TextBlock Text="{Binding UserInfo.name}"  />
+                    <TextBlock Text="部门:" />
+                    <TextBlock Text="{Binding UserInfo.departName}" />
+                    <TextBlock Text="邮箱:" />
+                    <TextBlock Text="{Binding UserInfo.mail}" />
+                    <TextBlock Text="密码:" />
+                    <TextBlock Text="{Binding UserInfo.mailpwd}" />
+                    <TextBlock Text="发送到:" />
+                    <TextBlock Text="{Binding UserInfo.mailto}" />
+                    <Button Content="Edit" Style="{x:Null}" Command="{Binding EditUserCommand}"></Button>
+                </WrapPanel>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

@@ -38,7 +38,7 @@ namespace DesktopClient
                     src.Clear();
                 }
             });
-
+            this.Close();
         }
     }
 }

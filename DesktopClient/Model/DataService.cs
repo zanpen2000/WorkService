@@ -88,5 +88,11 @@ namespace DesktopClient.Model
         {
             OnDiaryItemsInsert(this, new ServiceContract.DiaryItemsInsertEventArgs(percent));
         }
+
+
+        public void ReturnSendDiary(bool successed, string msg)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

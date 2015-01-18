@@ -68,10 +68,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="App_Data\RG03_042_Template.xlsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -80,6 +79,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\3rd\3rd.csproj">
+      <Project>{fcd80d5d-4442-468c-a333-626a12b8fa0a}</Project>
+      <Name>3rd</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DBHelper\DBHelper.csproj">
       <Project>{f290be0b-180d-478e-88cb-b496c3c5843f}</Project>
       <Name>DBHelper</Name>

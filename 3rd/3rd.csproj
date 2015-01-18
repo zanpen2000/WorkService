@@ -54,6 +54,7 @@
     <Compile Include="DiaryExcelHelper.cs" />
     <Compile Include="EMail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

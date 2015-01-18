@@ -30,7 +30,7 @@
                 <TextBox Text="{Binding DiaryItem.dtext}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1"/>
             </Grid>
             <StackPanel Grid.Row="2" >
-                <Button Content="插入" Command="{Binding InsertCommand}"/>
+                <Button Content="Commit" Command="{Binding InsertCommand}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="0">
@@ -41,7 +41,7 @@
             </Grid.RowDefinitions>
             <ProgressBar Grid.Row="0" x:Name="pbar" Height="10" Visibility="Collapsed"/>
             <DataGrid Grid.Row="1" x:Name="dataGrid" ItemsSource="{Binding DiaryItems}"/>
-            <Button Grid.Row="2" Content="Save" Command="{Binding SaveDiaryCommand}"/>
+            <Button Grid.Row="2" Content="Save to database" Command="{Binding SaveDiaryCommand}"/>
         </Grid>
         
     </Grid>

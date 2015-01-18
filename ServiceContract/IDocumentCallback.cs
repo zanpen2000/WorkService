@@ -29,6 +29,9 @@ namespace ServiceContract
 
         [OperationContract]
         void ReturnDiaryItemInsertPercent(int percent);
+
+        [OperationContract]
+        void ReturnSendDiary(bool successed, string msg);
     }
 
 

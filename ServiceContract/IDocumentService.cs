@@ -25,5 +25,14 @@ namespace ServiceContract
 
         [OperationContract]
         void InsertDiaryItems(IEnumerable<DBModel.domainDiary> diaryItems);
+
+        [OperationContract]
+        void SendDiary(string number, DateTime date);
+
+        [OperationContract]
+        void InsertUser(DBModel.codeUsers user);
+
+        [OperationContract]
+        void UpdateUser(DBModel.codeUsers user);
     }
 }
