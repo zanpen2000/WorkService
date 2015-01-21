@@ -6,13 +6,7 @@
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
         DataContext="{Binding Diary, Source={StaticResource Locator}}">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Skins/MainSkin.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+    
     <Grid Background="YellowGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

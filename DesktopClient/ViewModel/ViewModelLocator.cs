@@ -30,8 +30,8 @@ namespace DesktopClient.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IDataService, DataService>();
             SimpleIoc.Default.Register<MainViewModel>();
-            //SimpleIoc.Default.Register<DiaryViewModel>();
             SimpleIoc.Default.Register<ItemEditViewModel>();
+            SimpleIoc.Default.Register<UserEditViewModel>();
         }
 
         /// <summary>
@@ -59,6 +59,20 @@ namespace DesktopClient.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<ItemEditViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the UserViewModel property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public UserEditViewModel UserViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserEditViewModel>();
             }
         }
 

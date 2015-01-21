@@ -9,14 +9,11 @@ namespace ServiceContract
 {
     public interface IDocumentCallback
     {
-        event EventHandler<UserInfoEventArgs> OnGetUserInfo;
-        event EventHandler<ViewDiarysEventArgs> OnGetUserDiarys;
-        event EventHandler<DiaryEventArgs> OnLoadDiary;
-        event EventHandler<DiarysEventArgs> OnLoadDiarys;
-        event EventHandler<DiaryItemsInsertEventArgs> OnDiaryItemsInsert;
+      
+        
 
         [OperationContract]
-        void ReturnUserInfo(viewUserInfo user);
+        void ReturnUserInfo(codeUsers user);
 
         [OperationContract]
         void ReturnUserDiarys(IEnumerable<DBModel.viewUserDiarys> diarys);
@@ -32,6 +29,9 @@ namespace ServiceContract
 
         [OperationContract]
         void ReturnSendDiary(bool successed, string msg);
+
+        [OperationContract]
+        void ReturnRowAffected(int r);
     }
 
 

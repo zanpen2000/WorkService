@@ -17,7 +17,15 @@ namespace DesktopClient
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
             Messenger.Default.Register<object>(this, "ShowDiaryView", ShowDiaryView);
+            Messenger.Default.Register<DBModel.codeUsers>(this, "ShowUserEditView", ShowUserEditView);
             this.Unloaded += MainWindow_Unloaded;
+        }
+
+        private void ShowUserEditView(DBModel.codeUsers usr)
+        {
+            var view = new Views.UserEditView();
+            view.Show();
+            Messenger.Default.Send<DBModel.codeUsers>(usr, "SetUser");
         }
 
         void MainWindow_Unloaded(object sender, RoutedEventArgs e)

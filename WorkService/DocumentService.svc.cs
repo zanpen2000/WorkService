@@ -31,7 +31,7 @@ namespace WorkService
         public void GetUserInfo(string number)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            viewUserInfo user = new viewUserInfo().Select(u => u.number == number);
+            codeUsers user = new codeUsers().Select(u => u.number == number);
             callback.ReturnUserInfo(user);
         }
 
@@ -126,16 +126,16 @@ namespace WorkService
 
         public void InsertUser(codeUsers user)
         {
-            user.Insert();
+            int r = user.Insert();
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            callback.ReturnUserInfo(new viewUserInfo().Where(v => v.number == user.number).Select());
+            callback.ReturnRowAffected(r);
         }
 
         public void UpdateUser(codeUsers user)
         {
             user.Update();
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-            callback.ReturnUserInfo(new viewUserInfo().Where(v => v.number == user.number).Select());
+            callback.ReturnUserInfo(new codeUsers().Where(v => v.number == user.number).Select());
         }
     }
 

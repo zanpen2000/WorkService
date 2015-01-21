@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 
+
+
 namespace DesktopClient.ViewModel
 {
     /// <summary>
@@ -143,13 +145,13 @@ namespace DesktopClient.ViewModel
         /// </summary>
         public const string UserInfoPropertyName = "UserInfo";
 
-        private DBModel.viewUserInfo _userInfo = null;
+        private DBModel.codeUsers _userInfo = null;
 
         /// <summary>
         /// Sets and gets the UserInfo property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public DBModel.viewUserInfo UserInfo
+        public DBModel.codeUsers UserInfo
         {
             get
             {
@@ -255,12 +257,18 @@ namespace DesktopClient.ViewModel
             _dataService.GetDiarys(CurrentPage);
 
             SendMailCommand = new RelayCommand(_sendMailExecute, _canSendMailExecute);
-            EditUserCommand = new RelayCommand(_EditUserExecute);
+            EditUserCommand = new RelayCommand(_EditUserExecute, _canEditUserExecute);
+        }
+
+        private bool _canEditUserExecute()
+        {
+            return this.UserInfo != null && this.UserInfo.id > 0;
         }
 
         private void _EditUserExecute()
         {
-            //throw new System.NotImplementedException();
+            Messenger.Default.Send<DBModel.codeUsers>(this.UserInfo, "ShowUserEditView");
+
         }
 
         private bool _canSendMailExecute()
@@ -273,7 +281,7 @@ namespace DesktopClient.ViewModel
             /*
              调用服务器的生成Excel日志并发送邮件服务
              */
-            
+
         }
 
         void _dataService_OnGetUserDiarys(object sender, ServiceContract.ViewDiarysEventArgs e)
@@ -293,6 +301,6 @@ namespace DesktopClient.ViewModel
         ////    base.Cleanup();
         ////}
 
-        
+
     }
 }

@@ -43,6 +43,7 @@
     <Compile Include="DiaryEventArgs.cs" />
     <Compile Include="DiaryItemsInsertEventArgs.cs" />
     <Compile Include="DiarysEventArgs.cs" />
+    <Compile Include="RowAffectedEventArgs.cs" />
     <Compile Include="ViewDiarysEventArgs.cs" />
     <Compile Include="IDocumentCallback.cs" />
     <Compile Include="IDocumentService.cs" />

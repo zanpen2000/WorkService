@@ -27,11 +27,20 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+					private System.String _code = "";
+					/// <summary>
+					/// code
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "code", FieldType = "nchar", FieldRemark = "code", Length = 4, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataMember]
+					public System.String code{ set { _code = value; changed("code");} get { return _code; } }
+
+				
 					private System.String _name = "";
 					/// <summary>
-					/// 
+					/// name
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "name", FieldType = "nvarchar", FieldRemark = "", Length = 50, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataEntityFieldAttribute(FieldName = "name", FieldType = "nvarchar", FieldRemark = "name", Length = 50, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
@@ -116,18 +125,18 @@ namespace DBModel
 				
 					private System.String _number = "";
 					/// <summary>
-					/// 
+					/// number
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "number", FieldType = "varchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataEntityFieldAttribute(FieldName = "number", FieldType = "varchar", FieldRemark = "number", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String number{ set { _number = value; changed("number");} get { return _number; } }
 
 				
 					private System.String _name = "";
 					/// <summary>
-					/// 
+					/// name
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "name", FieldType = "nvarchar", FieldRemark = "", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataEntityFieldAttribute(FieldName = "name", FieldType = "nvarchar", FieldRemark = "name", Length = 30, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
@@ -145,34 +154,34 @@ namespace DBModel
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "departId", FieldType = "int", FieldRemark = "", Length = 10, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "departId", FieldType = "int", FieldRemark = "", Length = 10, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.Int32 departId{ set { _departId = value; changed("departId");} get { return _departId; } }
 
 				
 					private System.String _mail = "";
 					/// <summary>
-					/// 
+					/// mail
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mail", FieldType = "varchar", FieldRemark = "", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mail", FieldType = "varchar", FieldRemark = "mail", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mail{ set { _mail = value; changed("mail");} get { return _mail; } }
 
 				
 					private System.String _mailpwd = "";
 					/// <summary>
-					/// 
+					/// mailpwd
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mailpwd", FieldType = "varchar", FieldRemark = "", Length = 255, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mailpwd", FieldType = "varchar", FieldRemark = "mailpwd", Length = 255, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mailpwd{ set { _mailpwd = value; changed("mailpwd");} get { return _mailpwd; } }
 
 				
 					private System.String _mailto = "";
 					/// <summary>
-					/// 
+					/// mailto
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "mailto", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mailto{ set { _mailto = value; changed("mailto");} get { return _mailto; } }
 
@@ -739,6 +748,15 @@ namespace DBModel
 					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
 					[DataMember]
 					public System.String mailto{ set { _mailto = value; changed("mailto");} get { return _mailto; } }
+
+				
+					private System.Int32 _id = 0;
+					/// <summary>
+					/// 
+					/// </summary>
+					[DataEntityFieldAttribute(FieldName = "id", FieldType = "int", FieldRemark = "", Length = 10, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataMember]
+					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				}
 

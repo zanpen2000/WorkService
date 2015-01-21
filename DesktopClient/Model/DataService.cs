@@ -13,7 +13,7 @@ namespace DesktopClient.Model
         public event EventHandler<ServiceContract.DiarysEventArgs> OnLoadDiarys = delegate { };
         public event EventHandler<ServiceContract.DiaryEventArgs> OnLoadDiary;
         public event EventHandler<ServiceContract.DiaryItemsInsertEventArgs> OnDiaryItemsInsert = delegate { };
-        
+        public event EventHandler<ServiceContract.RowAffectedEventArgs> OnSaved = delegate { };
 
         public void GetUserInfo()
         {
@@ -25,7 +25,7 @@ namespace DesktopClient.Model
             });
         }
 
-        public void ReturnUserInfo(viewUserInfo user)
+        public void ReturnUserInfo(codeUsers user)
         {
             OnGetUserInfo(this, new ServiceContract.UserInfoEventArgs(user));
         }
@@ -94,5 +94,23 @@ namespace DesktopClient.Model
         {
             throw new NotImplementedException();
         }
+
+
+        public void InsertUser(codeUsers user)
+        {
+            AppSettings.Set("Number", user.number);
+
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+            {
+                net.InsertUser(user);
+            });
+        }
+
+        public void ReturnRowAffected(int r)
+        {
+            OnSaved(this, new ServiceContract.RowAffectedEventArgs(r));
+        }
+
     }
 }
