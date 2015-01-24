@@ -9,9 +9,6 @@ namespace ServiceContract
 {
     public interface IDocumentCallback
     {
-      
-        
-
         [OperationContract]
         void ReturnUserInfo(codeUsers user);
 
@@ -32,6 +29,9 @@ namespace ServiceContract
 
         [OperationContract]
         void ReturnRowAffected(int r);
+
+        [OperationContract]
+        void ReturnSaveExcelFile(string newfilename);
     }
 
 

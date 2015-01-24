@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using DesktopClient.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 
 namespace DesktopClient
 {
@@ -16,9 +17,45 @@ namespace DesktopClient
         {
             InitializeComponent();
             Closing += (s, e) => ViewModelLocator.Cleanup();
-            Messenger.Default.Register<object>(this, "ShowDiaryView", ShowDiaryView);
+            Messenger.Default.Register<DBModel.domainDiary>(this, "ShowDiaryView", ShowDiaryView);
             Messenger.Default.Register<DBModel.codeUsers>(this, "ShowUserEditView", ShowUserEditView);
+            Messenger.Default.Register<bool>(this, "ShowBusy", ShowBusy);
+            Messenger.Default.Register<string>(this, "SetBusyContent", SetBusyContent);
+            Messenger.Default.Register<int>(this, "SaveDiaryItemPercent", SaveDiaryItemPercent);
+            Messenger.Default.Register<string>(this, "SetPasswordDisplay", SetPasswordDisplay);
             this.Unloaded += MainWindow_Unloaded;
+        }
+
+        private void SetPasswordDisplay(string obj)
+        {
+            Dispatcher.Invoke((Action)delegate
+            {
+                txtPwd.Password = obj;
+            });
+        }
+
+        private void ShowBusy(bool obj)
+        {
+            Dispatcher.Invoke((Action)delegate
+            {
+                this._busy.IsBusy = obj;
+            });
+        }
+
+        private void SaveDiaryItemPercent(int obj)
+        {
+            Dispatcher.Invoke((Action)delegate
+            {
+                this._busy.BusyContent = string.Format("上传服务器 {0}%", obj);
+            });
+        }
+
+        private void SetBusyContent(string obj)
+        {
+            Dispatcher.Invoke((Action)delegate
+            {
+                this._busy.BusyContent = obj;
+            });
         }
 
         private void ShowUserEditView(DBModel.codeUsers usr)
@@ -33,9 +70,22 @@ namespace DesktopClient
             Messenger.Default.Unregister(this);
         }
 
-        private void ShowDiaryView(object obj)
+        private void ShowDiaryView(DBModel.domainDiary diary)
         {
-            new ItemEditView().Show();
+            var vm = new ItemEditView();
+            Messenger.Default.Send<DBModel.domainDiary>(diary, "SetDiaryItem");
+            vm.ShowDialog();
+        }
+      
+        private void Calendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var date = DateTime.Parse( e.AddedItems[0].ToString());
+            Messenger.Default.Send<DateTime?>(date, "RetrieveContentByDate");
+        }
+
+        private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Messenger.Default.Send<DBModel.domainDiary>((DBModel.domainDiary)datagrid.CurrentItem, "ShowDiaryView");
         }
     }
 }

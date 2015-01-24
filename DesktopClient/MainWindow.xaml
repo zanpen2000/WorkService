@@ -3,59 +3,109 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Height="auto"
-        Width="900"
-        SizeToContent="Height"
+        
+        Height="452"
+        Width="800"        
+        WindowStartupLocation="CenterScreen"
         Title="{Binding WelcomeTitle}"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    <Grid x:Name="LayoutRoot">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="Yellow">
-            <TextBlock  FontSize="22" FontWeight="Bold">工作日志</TextBlock>
-        </Grid>
-        <Calendar Grid.Row="1" Grid.Column="0"></Calendar>
-        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+    <xctk:BusyIndicator x:Name="_busy" IsBusy="False" BusyContent="" DisplayAfter="0"   >
+        <Grid x:Name="LayoutRoot" Margin="20,20,20,20" Background="WhiteSmoke">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" AutoGenerateColumns="True" ItemsSource="{Binding DiaryItems}"></DataGrid>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
-                <Button Content="Add" Command="{Binding AddCommand}"/>
-                <Button Content="Send Mail" Command="{Binding SendMailCommand}"/>
-                <Button Content="Close" Command="{Binding CloseCommand}" />
-            </StackPanel>
-        </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="DarkGray">
+                <TextBlock Text="工作日志" FontSize="20" Foreground="White" VerticalAlignment="Center" Margin="10"/>
+            </Grid>
+            
+            <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="datagrid" Grid.Row="0" AutoGenerateColumns="False" ItemsSource="{Binding DiaryItems}" 
+                          SelectionMode="Extended"
+                          IsReadOnly="True"
+                          MouseDoubleClick="DataGrid_MouseDoubleClick"
+                          RowDetailsTemplate="{Binding DiaryItem}"
+                          >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Path=id}"/>
+                        <DataGridTextColumn Header="项目名称" Binding="{Binding item}"/>
+                        <DataGridTextColumn Header="日志内容" Binding="{Binding dtext}"/>
+                        <DataGridTextColumn Header="状态" Binding="{Binding status}"/>
+                        <DataGridTextColumn Header="预计增时" Binding="{Binding increaseTime}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Grid.Row="1"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Add Diary Item" Command="{Binding AddCommand}" Grid.Column="0"/>
+                    <Button Content="Send Mail" Command="{Binding SendMailCommand}" Grid.Column="1"/>
+                    <Button Content="Erase Selected" Command="{Binding EraseItemsCommand}" Grid.Column="2"/>
+                    <Button Content="Close" Command="{Binding CloseCommand}" Grid.Column="3"/>
+                </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Calendar Grid.Row="0"  SelectedDate="{Binding PickDate}" SelectionMode="SingleDate"
+                          SelectedDatesChanged="Calendar_SelectedDatesChanged" >
+                </Calendar>
+                <Grid Grid.Row="1"  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="编号" Grid.Column="0" Grid.Row="0" />
+                    <TextBox Text="{Binding UserInfo.number}" Grid.Column="1" Grid.Row="0" IsEnabled="False"/>
 
-        <StatusBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-            <StatusBarItem>
-                <WrapPanel >
-                    <TextBlock Text="编号："/>
-                    <TextBlock Text="{Binding UserInfo.number}" />
-                    <TextBlock Text="姓名：" />
-                    <TextBlock Text="{Binding UserInfo.name}"  />
-                    <TextBlock Text="部门:" />
-                    <TextBlock Text="{Binding UserInfo.departName}" />
-                    <TextBlock Text="邮箱:" />
-                    <TextBlock Text="{Binding UserInfo.mail}" />
-                    <TextBlock Text="密码:" />
-                    <TextBlock Text="{Binding UserInfo.mailpwd}" />
-                    <TextBlock Text="发送到:" />
-                    <TextBlock Text="{Binding UserInfo.mailto}" />
-                    <Button Content="Edit" Style="{x:Null}" Command="{Binding EditUserCommand}"></Button>
-                </WrapPanel>
-            </StatusBarItem>
-        </StatusBar>
-    </Grid>
+                    <TextBlock Text="姓名" Grid.Column="0" Grid.Row="1" />
+                    <TextBox Text="{Binding UserInfo.name}" Grid.Column="1" Grid.Row="1"  IsEnabled="False"/>
+
+                    <TextBlock Text="部门" Grid.Column="0" Grid.Row="2" />
+                    <TextBox Text="{Binding UserInfo.departId}" Grid.Column="1" Grid.Row="2"  IsEnabled="False"/>
+
+                    <TextBlock Text="邮箱" Grid.Column="0" Grid.Row="3" />
+                    <TextBox Text="{Binding UserInfo.mail}" Grid.Column="1" Grid.Row="3"  IsEnabled="False"/>
+
+                    <TextBlock Text="密码" Grid.Column="0" Grid.Row="4" />
+                    <TextBox Text="{Binding UserInfo.mailpwd}" Grid.Column="1" Grid.Row="4"  Visibility="Collapsed"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="4" x:Name="txtPwd" IsEnabled="False"/>
+
+                    <TextBlock Text="发送到" Grid.Column="0" Grid.Row="5" />
+                    <TextBox Text="{Binding UserInfo.mailto}" Grid.Column="1" Grid.Row="5"  IsEnabled="False"/>
+                    <Button Content="Edit User" Command="{Binding EditUserCommand}" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </xctk:BusyIndicator>
 </Window>
+
+    

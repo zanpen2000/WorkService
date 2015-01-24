@@ -54,9 +54,10 @@
         <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Setter Property="TextWrapping" Value="NoWrap"></Setter>
-        <Setter Property="Margin" Value="10,0,0,0"></Setter>
+        <Setter Property="Margin" Value="10,10,10,10"></Setter>
         <Setter Property="FontSize" Value="13"></Setter>
     </Style>
+  
     <Style x:Key="underlingTextblock" TargetType="{x:Type TextBlock}">
         <Setter Property="TextDecorations">
             <Setter.Value>

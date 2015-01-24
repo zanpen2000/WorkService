@@ -62,12 +62,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.2.14272.0, Culture=neutral, PublicKeyToken=ba83ff368b7563c6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ServerExcelFilenameEventArg.cs" />
+    <Compile Include="Model\ServerSendDiaryEventArg.cs" />
     <Compile Include="Views\ItemEditView.xaml.cs">
       <DependentUpon>ItemEditView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +146,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\3rd\3rd.csproj">
+      <Project>{fcd80d5d-4442-468c-a333-626a12b8fa0a}</Project>
+      <Name>3rd</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppLayer\AppLayer.csproj">
       <Project>{79174bc8-666b-4dbe-9398-871e8bc9cefb}</Project>
       <Name>AppLayer</Name>
@@ -155,6 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Design\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Xceed.Wpf.Toolkit.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

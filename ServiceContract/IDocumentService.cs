@@ -30,9 +30,7 @@ namespace ServiceContract
         void SendDiary(string number, DateTime date);
 
         [OperationContract]
-        void InsertUser(DBModel.codeUsers user);
+        void EditUser(DBModel.codeUsers user);
 
-        [OperationContract]
-        void UpdateUser(DBModel.codeUsers user);
     }
 }

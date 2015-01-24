@@ -5,39 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        DataContext="{Binding Diary, Source={StaticResource Locator}}">
-    
-    <Grid Background="YellowGreen">
+        Height="452" Width="800" WindowStartupLocation="CenterScreen"
+        DataContext="{Binding Diary, Source={StaticResource Locator}}">    
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="Yellow">
-            <TextBlock Text="项目描述" FontSize="22" VerticalAlignment="Center" Margin="20"/>
+        <Grid Grid.Row="0" Background="DarkGray">
+            <TextBlock Text="项目描述" FontSize="20" Foreground="White" VerticalAlignment="Center" Margin="10"/>
         </Grid>
 
-        <Grid Grid.Row="1" Background="White" Margin="20">
+        <Grid Grid.Row="1" Background="Transparent" Margin="20">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="项目名称"/>
-                <TextBox Text="{Binding ItemName}"/>
+                <TextBox Text="{Binding DiaryItem.item}"/>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="2" Background="White" Margin="20">
+        <Grid Grid.Row="2" Background="Transparent" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="工作内容" Grid.Row="0"/>
-            <TextBox Text="{Binding ItemText}" Grid.Row="1"
-                    TextWrapping="Wrap" Style="{StaticResource multiLineTextbox}" AcceptsReturn="True" BorderThickness="0"/>
+            <TextBox Text="{Binding DiaryItem.dtext}" Grid.Row="1"
+                    TextWrapping="Wrap" Style="{StaticResource multiLineTextbox}" AcceptsReturn="True" BorderThickness="1"/>
         </Grid>
 
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="完成情况" Grid.Column="0">
+                <TextBox Text="{Binding DiaryItem.status}"/>
+            </GroupBox>
+            <GroupBox Header="预计增时" Grid.Column="1">
+                <TextBox Text="{Binding DiaryItem.increaseTime}"/>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -45,7 +58,5 @@
             <Button Content="Save" Command="{Binding SaveCommand}" Grid.Column="0"/>
             <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1"/>
         </Grid>
-
-
     </Grid>
 </Window>

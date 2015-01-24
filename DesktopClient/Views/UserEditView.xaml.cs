@@ -17,7 +17,13 @@ namespace DesktopClient.Views
             Messenger.Default.Register<object>(this, "Close", CloseWindow);
             Messenger.Default.Register<string>(this, "HasInValidData", HasInValidData);
             Messenger.Default.Register<int>(this, "SaveDone", SaveDone);
+            Messenger.Default.Register<string>(this, "SetPasswordFromNet", SetPasswordFromNet);
             this.Unloaded += UserEditView_Unloaded;
+        }
+
+        private void SetPasswordFromNet(string obj)
+        {
+            txtPwd.Password = obj;
         }
 
         private void SaveDone(int obj)

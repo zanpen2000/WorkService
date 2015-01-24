@@ -5,18 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
+        Width="500"
+        Height="360"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding UserViewModel, Source={StaticResource Locator}}">
-    <Grid Background="YellowGreen">
+    <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0" Background="Yellow">
-            <TextBlock Text="用户编辑" FontSize="22" VerticalAlignment="Center" Margin="20"/>
+
+        <Grid Grid.Row="0" Background="DarkGray">
+            <TextBlock Text="用户编辑" FontSize="20" Foreground="White" VerticalAlignment="Center" Margin="10"/>
         </Grid>
-        
+
         <Grid Grid.Row="1" Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -30,23 +33,24 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="编号" Grid.Column="0" Grid.Row="0" Style="{StaticResource sysTitle}"/>
-            <TextBox Text="{Binding User.number}" Grid.Column="1" Grid.Row="0"/>
+            <TextBlock Text="编号" Grid.Column="0" Grid.Row="0" Style="{StaticResource fileSearchResult}"/>
+            <TextBox Text="{Binding User.number}" Grid.Column="1" Grid.Row="0" Margin="5"/>
 
-            <TextBlock Text="姓名" Grid.Column="0" Grid.Row="1" Style="{StaticResource sysTitle}"/>
-            <TextBox Text="{Binding User.name}" Grid.Column="1" Grid.Row="1"/>
+            <TextBlock Text="姓名" Grid.Column="0" Grid.Row="1" Style="{StaticResource fileSearchResult}"/>
+            <TextBox Text="{Binding User.name}" Grid.Column="1" Grid.Row="1"  Margin="5"/>
 
-            <TextBlock Text="部门" Grid.Column="0" Grid.Row="2" Style="{StaticResource sysTitle}"/>
-            <TextBox Text="{Binding User.departId}" Grid.Column="1" Grid.Row="2"/>
+            <TextBlock Text="部门" Grid.Column="0" Grid.Row="2" Style="{StaticResource fileSearchResult}"/>
+            <TextBox Text="{Binding User.departId}" Grid.Column="1" Grid.Row="2" Margin="5"/>
 
-            <TextBlock Text="邮箱" Grid.Column="0" Grid.Row="3" Style="{StaticResource sysTitle}"/>
-            <TextBox Text="{Binding User.mail}" Grid.Column="1" Grid.Row="3"/>
+            <TextBlock Text="邮箱" Grid.Column="0" Grid.Row="3" Style="{StaticResource fileSearchResult}"/>
+            <TextBox Text="{Binding User.mail}" Grid.Column="1" Grid.Row="3" Margin="5"/>
 
-            <TextBlock Text="密码" Grid.Column="0" Grid.Row="4" Style="{StaticResource sysTitle}"/>
-            <TextBox Text="{Binding User.mailpwd}" Grid.Column="1" Grid.Row="4"/>
+            <TextBlock Text="密码" Grid.Column="0" Grid.Row="4" Style="{StaticResource fileSearchResult}"/>
+            <TextBox Text="{Binding User.mailpwd}" Grid.Column="1" Grid.Row="4" Margin="5" Visibility="Collapsed"/>
+            <PasswordBox Grid.Column="1" Grid.Row="4" Margin="5" x:Name="txtPwd" />
 
-            <TextBlock Text="发送到" Grid.Column="0" Grid.Row="5" Style="{StaticResource sysTitle}"/>
-            <TextBox Text="{Binding User.mailto}" Grid.Column="1" Grid.Row="5"/>
+            <TextBlock Text="发送到" Grid.Column="0" Grid.Row="5" Style="{StaticResource fileSearchResult}"/>
+            <TextBox Text="{Binding User.mailto}" Grid.Column="1" Grid.Row="5" Margin="5"/>
 
 
         </Grid>
@@ -56,8 +60,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Save" Command="{Binding SaveCommand}" Grid.Column="0"/>
-            <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1"/>
+            <Button Content="_Save" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=txtPwd}" Grid.Column="0"/>
+            <Button Content="_Cancel" Command="{Binding CancelCommand}" Grid.Column="1"/>
         </Grid>
 
     </Grid>

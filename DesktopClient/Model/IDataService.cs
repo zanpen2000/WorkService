@@ -13,7 +13,9 @@ namespace DesktopClient.Model
         event EventHandler<DiaryEventArgs> OnLoadDiary;
         event EventHandler<DiarysEventArgs> OnLoadDiarys;
         event EventHandler<DiaryItemsInsertEventArgs> OnDiaryItemsInsert;
-        event EventHandler<RowAffectedEventArgs> OnSaved;
+        event EventHandler<RowAffectedEventArgs> OnSavedToDatabase;
+        event EventHandler<ServerExcelFilenameEventArg> OnSavedExcelFile;
+        event EventHandler<ServerSendDiaryEventArg> OnServerSendDiary;
 
         void GetUserInfo();
 
@@ -25,6 +27,8 @@ namespace DesktopClient.Model
 
         void InsertDiaryItems(IEnumerable<DBModel.domainDiary> diaryItems);
 
-        void InsertUser(DBModel.codeUsers user);
+        void EditUser(DBModel.codeUsers user);
+
+        void SendDiary(string number, DateTime date);
     }
 }

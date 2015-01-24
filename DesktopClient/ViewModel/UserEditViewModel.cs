@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DesktopClient.ViewModel
 {
@@ -22,15 +23,36 @@ namespace DesktopClient.ViewModel
         public UserEditViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            SaveCommand = new RelayCommand(_saveExecute);
+            SaveCommand = new RelayCommand<object>(_saveExecute, _canSaveExecute);
+
             CancelCommand = new RelayCommand(_cancelExecute);
             Messenger.Default.Register<DBModel.codeUsers>(this, "SetUser", SetUser);
-            
+
+        }
+
+        private bool _canSaveExecute(object arg)
+        {
+            var pwdbox = arg as PasswordBox;
+            var pwd = pwdbox.Password;
+
+            if (string.IsNullOrEmpty(this.User.mail) ||
+                string.IsNullOrEmpty(pwd) ||
+                string.IsNullOrEmpty(this.User.mailto) ||
+                string.IsNullOrEmpty(this.User.name) ||
+                string.IsNullOrEmpty(this.User.number)
+                 )
+            {
+                return false;
+            }
+            return true;
         }
 
         private void SetUser(DBModel.codeUsers obj)
         {
             this.User = obj;
+            Messenger.Default.Send<string>(
+                _3rd.Security.Decode(this.User.mailpwd),
+                "SetPasswordFromNet");
         }
 
         private void _cancelExecute()
@@ -38,7 +60,7 @@ namespace DesktopClient.ViewModel
             Messenger.Default.Send<object>(null, "Close");
         }
 
-        private void _saveExecute()
+        private void _saveExecute(object obj)
         {
             string vmsg = User.Validate();
             if (!string.IsNullOrEmpty(vmsg))
@@ -47,9 +69,13 @@ namespace DesktopClient.ViewModel
                 return;
             }
 
+            var pwdbox = obj as PasswordBox;
+            User.mailpwd = pwdbox.Password;
+            User.mailpwd = _3rd.Security.Encode(User.mailpwd);
+
             //save and close
-            _dataService.OnSaved += _dataService_OnSaved;
-            _dataService.InsertUser(User);
+            _dataService.OnSavedToDatabase += _dataService_OnSaved;
+            _dataService.EditUser(User);
 
         }
 
@@ -81,7 +107,7 @@ namespace DesktopClient.ViewModel
             }
         }
 
-        public RelayCommand SaveCommand { get; set; }
+        public RelayCommand<object> SaveCommand { get; set; }
         public RelayCommand CancelCommand { get; set; }
     }
 }

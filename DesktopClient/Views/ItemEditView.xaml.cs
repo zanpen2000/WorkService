@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace DesktopClient
 {
@@ -13,6 +14,7 @@ namespace DesktopClient
         public ItemEditView()
         {
             InitializeComponent();
+            Messenger.Default.Register<object>(this, "CloseWindow", (obj) => { this.Close(); });
         }
     }
 }

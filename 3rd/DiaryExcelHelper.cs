@@ -26,6 +26,7 @@ namespace _3rd
         public DiaryExcelHelper(string filename)
         {
             System.IO.FileInfo fi = new System.IO.FileInfo(filename);
+            
             _excelPackage = new ExcelPackage(fi);
             _workSheet = _excelPackage.Workbook.Worksheets[_sheetName];
         }
@@ -119,6 +120,7 @@ namespace _3rd
 
         public void Dispose()
         {
+            _workSheet.Dispose();
             _excelPackage.Dispose();
         }
     }

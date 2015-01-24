@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 
 
 
@@ -19,6 +20,7 @@ namespace DesktopClient.ViewModel
     {
         private readonly IDataService _dataService;
 
+        #region Title
         /// <summary>
         /// The <see cref="WelcomeTitle" /> property's name.
         /// </summary>
@@ -48,7 +50,9 @@ namespace DesktopClient.ViewModel
                 RaisePropertyChanged(WelcomeTitlePropertyName);
             }
         }
+        #endregion
 
+        #region DiaryItem
         /// <summary>
         /// The <see cref="DiaryItem" /> property's name.
         /// </summary>
@@ -78,7 +82,9 @@ namespace DesktopClient.ViewModel
                 RaisePropertyChanged(DiaryItemPropertyName);
             }
         }
+        #endregion
 
+        #region DiaryItems
         /// <summary>
         /// The <see cref="DiaryItems" /> property's name.
         /// </summary>
@@ -108,8 +114,9 @@ namespace DesktopClient.ViewModel
                 RaisePropertyChanged(DiaryItemsPropertyName);
             }
         }
+        #endregion
 
-
+        #region Currentpage
         /// <summary>
         /// The <see cref="CurrentPage" /> property's name.
         /// </summary>
@@ -139,7 +146,41 @@ namespace DesktopClient.ViewModel
                 RaisePropertyChanged(CurrentPagePropertyName);
             }
         }
+        #endregion
 
+        #region PickDate
+        /// <summary>
+        /// The <see cref="PickDate" /> property's name.
+        /// </summary>
+        public const string PickDatePropertyName = "PickDate";
+
+        private DateTime _pickDate = DateTime.Today;
+
+        /// <summary>
+        /// Sets and gets the PickDate property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public DateTime PickDate
+        {
+            get
+            {
+                return _pickDate;
+            }
+
+            set
+            {
+                if (_pickDate == value)
+                {
+                    return;
+                }
+
+                _pickDate = value;
+                RaisePropertyChanged(PickDatePropertyName);
+            }
+        }
+        #endregion
+
+        #region UserInfo
         /// <summary>
         /// The <see cref="UserInfo" /> property's name.
         /// </summary>
@@ -169,39 +210,9 @@ namespace DesktopClient.ViewModel
                 RaisePropertyChanged(UserInfoPropertyName);
             }
         }
+        #endregion
 
-        /// <summary>
-        /// The <see cref="Diarys" /> property's name.
-        /// </summary>
-        public const string DiarysPropertyName = "Diarys";
-
-
-
-        private ObservableCollection<DBModel.viewUserDiarys> _diarys = null;
-
-        /// <summary>
-        /// Sets and gets the Diarys property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public ObservableCollection<DBModel.viewUserDiarys> Diarys
-        {
-            get
-            {
-                return _diarys;
-            }
-
-            set
-            {
-                if (_diarys == value)
-                {
-                    return;
-                }
-
-                _diarys = value;
-                RaisePropertyChanged(DiarysPropertyName);
-            }
-        }
-
+        #region Commands
         private RelayCommand _addCommand;
 
         /// <summary>
@@ -215,13 +226,11 @@ namespace DesktopClient.ViewModel
                     ?? (_addCommand = new RelayCommand(
                     () =>
                     {
-                        Messenger.Default.Send<object>(null, "ShowDiaryView");
+                        Messenger.Default.Send<DBModel.domainDiary>(DiaryItem, "ShowDiaryView");
 
                     }));
             }
         }
-
-
 
         private RelayCommand _closeCommand;
 
@@ -244,6 +253,9 @@ namespace DesktopClient.ViewModel
         public RelayCommand SendMailCommand { get; set; }
         public RelayCommand EditUserCommand { get; set; }
 
+        public RelayCommand<IList<DBModel.domainDiary>> EraseItemsCommand { get; set; }
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -251,13 +263,64 @@ namespace DesktopClient.ViewModel
         {
             _dataService = dataService;
             _dataService.OnGetUserInfo += _dataService_OnGetUserInfo;
-            _dataService.OnGetUserDiarys += _dataService_OnGetUserDiarys;
 
+            Messenger.Default.Send<bool>(true, "ShowBusy");
+            Messenger.Default.Send<string>("获取用户信息...", "SetBusyContent");
             _dataService.GetUserInfo();
-            _dataService.GetDiarys(CurrentPage);
+            _dataService.OnLoadDiarys +=_dataService_OnLoadDiarys;
 
+            DiaryItem = new DBModel.domainDiary();
+            DiaryItems = new ObservableCollection<DBModel.domainDiary>();
             SendMailCommand = new RelayCommand(_sendMailExecute, _canSendMailExecute);
             EditUserCommand = new RelayCommand(_EditUserExecute, _canEditUserExecute);
+            EraseItemsCommand = new RelayCommand<IList<DBModel.domainDiary>>(_eraseItemsExecute, _canEraseItemsExecute);
+
+            Messenger.Default.Register<DBModel.domainDiary>(this, "ReturnItemContent", ReturnItemContent);
+            Messenger.Default.Register<DateTime?>(this, "RetrieveContentByDate", RetrieveContentByDate);
+        }
+
+        /// <summary>
+        /// 删除日志条目
+        /// </summary>
+        /// <param name="arg"></param>
+        /// <returns></returns>
+        private bool _canEraseItemsExecute(IList<DBModel.domainDiary> arg)
+        {
+            //只允许删除未上传的
+
+            return arg.Count > 0;
+        }
+
+        private void _eraseItemsExecute(IList<DBModel.domainDiary> obj)
+        {
+            //只删除未上传的
+            foreach (var item in obj)
+            {
+                this.DiaryItems.Remove(item);
+            }
+        }
+
+        private void RetrieveContentByDate(DateTime? obj)
+        {
+            LoadDiaryItemsByUserIdAndDate();
+        }
+
+        void _dataService_OnLoadDiarys(object sender, ServiceContract.DiarysEventArgs e)
+        {
+            this.DiaryItems = new ObservableCollection<DBModel.domainDiary>(e.Items);
+            Messenger.Default.Send<bool>(false, "ShowBusy");
+        }
+
+        private void ReturnItemContent(DBModel.domainDiary obj)
+        {
+            this.DiaryItem = obj;
+            this.DiaryItem.date = this.PickDate;
+            this.DiaryItem.fileId = -1;
+            this.DiaryItem.userId = this.UserInfo.id;
+            this.DiaryItem.valid = true;
+
+            this.DiaryItems.Add(this.DiaryItem);
+            
         }
 
         private bool _canEditUserExecute()
@@ -268,30 +331,72 @@ namespace DesktopClient.ViewModel
         private void _EditUserExecute()
         {
             Messenger.Default.Send<DBModel.codeUsers>(this.UserInfo, "ShowUserEditView");
-
         }
 
         private bool _canSendMailExecute()
         {
-            return true;
+            return this.DiaryItems.Count > 0;
         }
 
         private void _sendMailExecute()
         {
-            /*
-             调用服务器的生成Excel日志并发送邮件服务
-             */
+            Messenger.Default.Send<bool>(true, "ShowBusy");
+            //入库
+            _dataService.OnDiaryItemsInsert += _dataService_OnDiaryItemsInsert;
+            //判断重复
+            _dataService.InsertDiaryItems(this.DiaryItems);
 
+            //生成文件和发送
+            _dataService.OnServerSendDiary += _dataService_OnServerSendDiary;
+            _dataService.OnSavedExcelFile += _dataService_OnSavedExcelFile;
+            _dataService.SendDiary(this.UserInfo.number, this.PickDate);
         }
 
-        void _dataService_OnGetUserDiarys(object sender, ServiceContract.ViewDiarysEventArgs e)
+        void _dataService_OnSavedExcelFile(object sender, ServerExcelFilenameEventArg e)
         {
-            this.Diarys = new ObservableCollection<DBModel.viewUserDiarys>(e.Diarys);
+            Messenger.Default.Send<string>(string.Format("日志文件 {0} 已保存", e.ExcelFilename), "SetBusyContent");
         }
 
+        void _dataService_OnServerSendDiary(object sender, ServerSendDiaryEventArg e)
+        {
+            if (e.Success)
+            {
+                LoadDiaryItemsByUserIdAndDate();
+            }
+            else
+            {
+
+            }
+            Messenger.Default.Send<string>(e.Message, "SetBusyContent");
+            System.Threading.Thread.Sleep(500);
+            Messenger.Default.Send<bool>(false, "ShowBusy");
+        }
+
+        void _dataService_OnDiaryItemsInsert(object sender, ServiceContract.DiaryItemsInsertEventArgs e)
+        {
+            Messenger.Default.Send<int>(e.Percent, "SaveDiaryItemPercent");
+        }
+      
         void _dataService_OnGetUserInfo(object sender, ServiceContract.UserInfoEventArgs e)
         {
             this.UserInfo = e.UserInfo;
+            Messenger.Default.Send<string>(this.UserInfo.mailpwd, "SetPasswordDisplay"
+            );
+            Messenger.Default.Send<bool>(false, "ShowBusy");
+            LoadDiaryItemsByUserIdAndDate();
+        }
+
+        private void LoadDiaryItemsByUserIdAndDate()
+        {
+            if (this.UserInfo != null)
+            {
+                Messenger.Default.Send<bool>(true, "ShowBusy");
+                Messenger.Default.Send<string>("获取所选日期的日志...", "SetBusyContent");
+
+                _dataService.LoadDiaryItems(this.UserInfo.id, PickDate);
+            }
+
+            
         }
 
         ////public override void Cleanup()
@@ -300,6 +405,8 @@ namespace DesktopClient.ViewModel
 
         ////    base.Cleanup();
         ////}
+
+
 
 
     }

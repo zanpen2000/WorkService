@@ -2,6 +2,7 @@
 using AppLayer;
 using DBModel;
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace DesktopClient.Model
@@ -13,7 +14,9 @@ namespace DesktopClient.Model
         public event EventHandler<ServiceContract.DiarysEventArgs> OnLoadDiarys = delegate { };
         public event EventHandler<ServiceContract.DiaryEventArgs> OnLoadDiary;
         public event EventHandler<ServiceContract.DiaryItemsInsertEventArgs> OnDiaryItemsInsert = delegate { };
-        public event EventHandler<ServiceContract.RowAffectedEventArgs> OnSaved = delegate { };
+        public event EventHandler<ServiceContract.RowAffectedEventArgs> OnSavedToDatabase = delegate { };
+        public event EventHandler<ServerExcelFilenameEventArg> OnSavedExcelFile = delegate { };
+        public event EventHandler<ServerSendDiaryEventArg> OnServerSendDiary;
 
         public void GetUserInfo()
         {
@@ -76,11 +79,17 @@ namespace DesktopClient.Model
 
         public void InsertDiaryItems(System.Collections.Generic.IEnumerable<domainDiary> diaryItems)
         {
+            List<domainDiary> diarys = new List<domainDiary>();
+            foreach (var item in diaryItems)
+            {
+                if (item.fileId <= 0) diarys.Add(item);
+            }
+
             var userNumber = AppSettings.Get("Number");
             InstanceContext context = new InstanceContext(this);
             ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
-                net.InsertDiaryItems(diaryItems);
+                net.InsertDiaryItems(diarys);
             });
         }
 
@@ -92,25 +101,41 @@ namespace DesktopClient.Model
 
         public void ReturnSendDiary(bool successed, string msg)
         {
-            throw new NotImplementedException();
+            OnServerSendDiary(this, new ServerSendDiaryEventArg(successed, msg));
         }
 
 
-        public void InsertUser(codeUsers user)
+        public void EditUser(codeUsers user)
         {
             AppSettings.Set("Number", user.number);
 
             InstanceContext context = new InstanceContext(this);
             ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
-                net.InsertUser(user);
+                net.EditUser(user);
             });
         }
 
         public void ReturnRowAffected(int r)
         {
-            OnSaved(this, new ServiceContract.RowAffectedEventArgs(r));
+            OnSavedToDatabase(this, new ServiceContract.RowAffectedEventArgs(r));
         }
 
+        public void SendDiary(string number, DateTime date)
+        {
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+            {
+                net.SendDiary(number, date);
+            });
+        }
+
+        public void ReturnSaveExcelFile(string newfilename)
+        {
+            OnSavedExcelFile(this, new ServerExcelFilenameEventArg(newfilename));
+        }
+
+
+        
     }
 }
