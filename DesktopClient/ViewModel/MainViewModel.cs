@@ -252,6 +252,7 @@ namespace DesktopClient.ViewModel
 
         public RelayCommand SendMailCommand { get; set; }
         public RelayCommand EditUserCommand { get; set; }
+        public RelayCommand SaveItemsCommand { get; set; }
 
         public RelayCommand<IList<DBModel.domainDiary>> EraseItemsCommand { get; set; }
         #endregion
@@ -263,6 +264,10 @@ namespace DesktopClient.ViewModel
         {
             _dataService = dataService;
             _dataService.OnGetUserInfo += _dataService_OnGetUserInfo;
+            _dataService.OnDiaryItemsInsert += _dataService_OnDiaryItemsInsert;
+            //生成文件和发送
+            _dataService.OnServerSendDiary += _dataService_OnServerSendDiary;
+            _dataService.OnSavedExcelFile += _dataService_OnSavedExcelFile;
 
             Messenger.Default.Send<bool>(true, "ShowBusy");
             Messenger.Default.Send<string>("获取用户信息...", "SetBusyContent");
@@ -274,9 +279,14 @@ namespace DesktopClient.ViewModel
             SendMailCommand = new RelayCommand(_sendMailExecute, _canSendMailExecute);
             EditUserCommand = new RelayCommand(_EditUserExecute, _canEditUserExecute);
             EraseItemsCommand = new RelayCommand<IList<DBModel.domainDiary>>(_eraseItemsExecute, _canEraseItemsExecute);
-
+            SaveItemsCommand = new RelayCommand(_saveItemsExecute);
             Messenger.Default.Register<DBModel.domainDiary>(this, "ReturnItemContent", ReturnItemContent);
             Messenger.Default.Register<DateTime?>(this, "RetrieveContentByDate", RetrieveContentByDate);
+        }
+
+        private void _saveItemsExecute()
+        {
+            _dataService.InsertDiaryItems(this.DiaryItems);
         }
 
         /// <summary>
@@ -318,9 +328,7 @@ namespace DesktopClient.ViewModel
             this.DiaryItem.fileId = -1;
             this.DiaryItem.userId = this.UserInfo.id;
             this.DiaryItem.valid = true;
-
             this.DiaryItems.Add(this.DiaryItem);
-            
         }
 
         private bool _canEditUserExecute()
@@ -341,14 +349,8 @@ namespace DesktopClient.ViewModel
         private void _sendMailExecute()
         {
             Messenger.Default.Send<bool>(true, "ShowBusy");
-            //入库
-            _dataService.OnDiaryItemsInsert += _dataService_OnDiaryItemsInsert;
-            //判断重复
-            _dataService.InsertDiaryItems(this.DiaryItems);
+            //未保存的先保存
 
-            //生成文件和发送
-            _dataService.OnServerSendDiary += _dataService_OnServerSendDiary;
-            _dataService.OnSavedExcelFile += _dataService_OnSavedExcelFile;
             _dataService.SendDiary(this.UserInfo.number, this.PickDate);
         }
 

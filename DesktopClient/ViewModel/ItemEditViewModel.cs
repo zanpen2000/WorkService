@@ -59,6 +59,21 @@ namespace DesktopClient.ViewModel
             _diaryItem = new DBModel.domainDiary();
             SaveCommand = new RelayCommand(_saveExecute, _canSaveExecute);
             Messenger.Default.Register<DBModel.domainDiary>(this, "SetDiaryItem", SetDiaryItem);
+            Messenger.Default.Register<string>(this, "CheckItemNameExists", CheckItemNameExists);
+            _dataService.OnItemNameExists += _dataService_OnItemNameExists;
+        }
+
+        void _dataService_OnItemNameExists(object sender, ItemNameExistsEventArg e)
+        {
+            this.ItemNameExists = e.Exists;
+            Messenger.Default.Send<bool>(e.Exists,"ItemNameExists");
+        }
+
+        public bool ItemNameExists { get; set; }
+
+        private void CheckItemNameExists(string itemname)
+        {
+            _dataService.CheckItemNameExists(itemname);
         }
 
         private void SetDiaryItem(DBModel.domainDiary item)
@@ -68,7 +83,7 @@ namespace DesktopClient.ViewModel
 
         private bool _canSaveExecute()
         {
-            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext);
+            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) && !this.ItemNameExists;
         }
 
         private void _saveExecute()

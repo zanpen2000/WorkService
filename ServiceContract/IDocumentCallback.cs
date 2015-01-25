@@ -32,6 +32,9 @@ namespace ServiceContract
 
         [OperationContract]
         void ReturnSaveExcelFile(string newfilename);
+
+        [OperationContract]
+        void ReturnItemNameExists(bool exists);
     }
 
 

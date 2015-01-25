@@ -32,5 +32,7 @@ namespace ServiceContract
         [OperationContract]
         void EditUser(DBModel.codeUsers user);
 
+        [OperationContract]
+        void CheckItemNameExists(string itemname);
     }
 }

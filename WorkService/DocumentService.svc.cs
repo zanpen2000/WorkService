@@ -214,6 +214,16 @@ namespace WorkService
                 callback.ReturnRowAffected(rowAffected);
         }
 
+        public void CheckItemNameExists(string itemname)
+        {
+            IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
+
+            bool exists = new domainDiary().Where(dd => dd.item == itemname).SelectCount() > 0;
+
+            if (OperationContext.Current.Channel.State == CommunicationState.Opened)
+                callback.ReturnItemNameExists(exists);
+            
+        }
     }
 
 }

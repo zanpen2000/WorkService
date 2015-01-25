@@ -16,6 +16,7 @@ namespace DesktopClient.Model
         event EventHandler<RowAffectedEventArgs> OnSavedToDatabase;
         event EventHandler<ServerExcelFilenameEventArg> OnSavedExcelFile;
         event EventHandler<ServerSendDiaryEventArg> OnServerSendDiary;
+        event EventHandler<ItemNameExistsEventArg> OnItemNameExists;
 
         void GetUserInfo();
 
@@ -30,5 +31,7 @@ namespace DesktopClient.Model
         void EditUser(DBModel.codeUsers user);
 
         void SendDiary(string number, DateTime date);
+
+        void CheckItemNameExists(string itemname);
     }
 }

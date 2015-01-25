@@ -53,11 +53,13 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Add Diary Item" Command="{Binding AddCommand}" Grid.Column="0"/>
-                    <Button Content="Send Mail" Command="{Binding SendMailCommand}" Grid.Column="1"/>
-                    <Button Content="Erase Selected" Command="{Binding EraseItemsCommand}" Grid.Column="2"/>
-                    <Button Content="Close" Command="{Binding CloseCommand}" Grid.Column="3"/>
+                    <Button Content="Add" Command="{Binding AddCommand}" Grid.Column="0"/>
+                    <Button Content="Save" Command="{Binding SaveItemsCommand}" Grid.Column="1"/>
+                    <Button Content="Send" Command="{Binding SendMailCommand}" Grid.Column="2"/>
+                    <Button Content="Erase" Command="{Binding EraseItemsCommand}" Grid.Column="3"/>
+                    <Button Content="Close" Command="{Binding CloseCommand}" Grid.Column="4"/>
                 </Grid>
             </Grid>
             

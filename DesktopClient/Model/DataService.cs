@@ -17,6 +17,7 @@ namespace DesktopClient.Model
         public event EventHandler<ServiceContract.RowAffectedEventArgs> OnSavedToDatabase = delegate { };
         public event EventHandler<ServerExcelFilenameEventArg> OnSavedExcelFile = delegate { };
         public event EventHandler<ServerSendDiaryEventArg> OnServerSendDiary;
+        public event EventHandler<ItemNameExistsEventArg> OnItemNameExists;
 
         public void GetUserInfo()
         {
@@ -135,7 +136,18 @@ namespace DesktopClient.Model
             OnSavedExcelFile(this, new ServerExcelFilenameEventArg(newfilename));
         }
 
+        public void CheckItemNameExists(string itemname)
+        {
+            InstanceContext context = new InstanceContext(this);
+            ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
+            {
+                net.CheckItemNameExists(itemname);
+            });
+        }
 
-        
+        public void ReturnItemNameExists(bool exists)
+        {
+            OnItemNameExists(this, new ItemNameExistsEventArg(exists));
+        }
     }
 }

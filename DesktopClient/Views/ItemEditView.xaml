@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Height="452" Width="800" WindowStartupLocation="CenterScreen"
+        Height="452" Width="600" WindowStartupLocation="CenterScreen"
         DataContext="{Binding Diary, Source={StaticResource Locator}}">    
     <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
@@ -23,7 +23,7 @@
         <Grid Grid.Row="1" Background="Transparent" Margin="20">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="项目名称"/>
-                <TextBox Text="{Binding DiaryItem.item}"/>
+                <TextBox x:Name="_itemname" Text="{Binding DiaryItem.item}" LostFocus="TextBox_LostFocus" />
             </StackPanel>
         </Grid>
 
