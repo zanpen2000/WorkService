@@ -80,10 +80,6 @@
     </Compile>
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
-    <Compile Include="Views\DiaryView.xaml.cs">
-      <DependentUpon>DiaryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModel\DiaryViewModel.cs" />
     <Compile Include="ViewModel\ItemEditViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\UserEditViewModel.cs" />
@@ -110,10 +106,6 @@
     <Page Include="Skins\MainSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\DiaryView.xaml">
-      <SubType>Form</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserEditView.xaml">
       <SubType>Form</SubType>

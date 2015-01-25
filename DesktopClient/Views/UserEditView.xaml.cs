@@ -14,7 +14,7 @@ namespace DesktopClient.Views
         public UserEditView()
         {
             InitializeComponent();
-            Messenger.Default.Register<object>(this, "Close", CloseWindow);
+            Messenger.Default.Register<object>(this, "CloseUserEditView", CloseWindow);
             Messenger.Default.Register<string>(this, "HasInValidData", HasInValidData);
             Messenger.Default.Register<int>(this, "SaveDone", SaveDone);
             Messenger.Default.Register<string>(this, "SetPasswordFromNet", SetPasswordFromNet);

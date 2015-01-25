@@ -56,14 +56,35 @@ namespace WorkService
                 callback.ReturnDiaryItems(ds);
         }
 
+        /// <summary>
+        /// 插入或者更新日志条目
+        /// </summary>
+        /// <param name="diaryItems"></param>
         public void InsertDiaryItems(IEnumerable<domainDiary> diaryItems)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
-
+            var dd = new domainDiary();
             int i = 0;
             foreach (var item in diaryItems)
             {
-                item.Insert();
+                if (dd.SelectCount(d => d.id == item.id) > 0)
+                {
+                    item.Update();
+                }
+                else
+                {
+                    item.Insert();
+                }
+
+                //if (dd.SelectCount(d => d.userId == item.userId && d.date == item.date && d.item.Trim() == item.item.Trim()) > 0)
+                //{
+                //    item.Update();
+                //}
+                //else
+                //{
+                //    item.Insert();
+                //}
+
                 i++;
                 int percent = (int)(((double)i / (double)((long)diaryItems.Count())) * 100);
                 if (OperationContext.Current.Channel.State == CommunicationState.Opened)
@@ -139,7 +160,7 @@ namespace WorkService
                 item.fileId = new domainFiles().Where(files => files.date == date && files.filepath == newfilename && files.userId == usr.id).Select().id;
                 item.Update();
             }
-         
+
             return newfilename;
         }
 
@@ -214,6 +235,10 @@ namespace WorkService
                 callback.ReturnRowAffected(rowAffected);
         }
 
+        /// <summary>
+        /// 根据项目名称检查日志条目是否存在
+        /// </summary>
+        /// <param name="itemname"></param>
         public void CheckItemNameExists(string itemname)
         {
             IDocumentCallback callback = OperationContext.Current.GetCallbackChannel<IDocumentCallback>();
@@ -222,7 +247,7 @@ namespace WorkService
 
             if (OperationContext.Current.Channel.State == CommunicationState.Opened)
                 callback.ReturnItemNameExists(exists);
-            
+
         }
     }
 

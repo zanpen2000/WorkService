@@ -50,7 +50,7 @@ namespace DesktopClient.Model
 
         public void LoadDiary(int id)
         {
-            var userNumber = AppSettings.Get("Number");
+            
             InstanceContext context = new InstanceContext(this);
             ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
@@ -70,7 +70,6 @@ namespace DesktopClient.Model
 
         public void LoadDiaryItems(int userId, DateTime date)
         {
-            var userNumber = AppSettings.Get("Number");
             InstanceContext context = new InstanceContext(this);
             ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {
@@ -86,7 +85,6 @@ namespace DesktopClient.Model
                 if (item.fileId <= 0) diarys.Add(item);
             }
 
-            var userNumber = AppSettings.Get("Number");
             InstanceContext context = new InstanceContext(this);
             ServiceCaller.Execute<ServiceContract.IDocumentService>(context, net =>
             {

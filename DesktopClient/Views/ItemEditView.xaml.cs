@@ -15,7 +15,7 @@ namespace DesktopClient
         public ItemEditView()
         {
             InitializeComponent();
-            Messenger.Default.Register<object>(this, "CloseWindow", (obj) => { this.Close(); });
+            Messenger.Default.Register<object>(this, "CloseItemEditView", (obj) => { this.Close(); });
             Messenger.Default.Register<bool>(this, "ItemNameExists", ItemNameExists);
         }
 

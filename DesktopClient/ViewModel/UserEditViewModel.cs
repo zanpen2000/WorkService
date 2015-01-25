@@ -57,7 +57,7 @@ namespace DesktopClient.ViewModel
 
         private void _cancelExecute()
         {
-            Messenger.Default.Send<object>(null, "Close");
+            Messenger.Default.Send<object>(null, "CloseUserEditView");
         }
 
         private void _saveExecute(object obj)

@@ -2,6 +2,7 @@
 using DesktopClient.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Data;
 
 namespace DesktopClient
 {
@@ -23,6 +24,7 @@ namespace DesktopClient
             Messenger.Default.Register<string>(this, "SetBusyContent", SetBusyContent);
             Messenger.Default.Register<int>(this, "SaveDiaryItemPercent", SaveDiaryItemPercent);
             Messenger.Default.Register<string>(this, "SetPasswordDisplay", SetPasswordDisplay);
+
             this.Unloaded += MainWindow_Unloaded;
         }
 
@@ -47,6 +49,9 @@ namespace DesktopClient
             Dispatcher.Invoke((Action)delegate
             {
                 this._busy.BusyContent = string.Format("上传服务器 {0}%", obj);
+
+                this._saveProgress.Visibility = obj != 100 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+                this._saveProgress.Value = obj;
             });
         }
 
@@ -76,16 +81,30 @@ namespace DesktopClient
             Messenger.Default.Send<DBModel.domainDiary>(diary, "SetDiaryItem");
             vm.ShowDialog();
         }
-      
+
         private void Calendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            var date = DateTime.Parse( e.AddedItems[0].ToString());
+            var date = DateTime.Parse(e.AddedItems[0].ToString());
             Messenger.Default.Send<DateTime?>(date, "RetrieveContentByDate");
         }
 
         private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Messenger.Default.Send<DBModel.domainDiary>((DBModel.domainDiary)datagrid.CurrentItem, "ShowDiaryView");
+        }
+
+       
+
+        private void datagrid_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
+        {
+            var drv = e.Row.Item as DBModel.domainDiary;
+            
+            if (drv.fileId > 0)
+            {
+                var row = datagrid.ItemContainerGenerator.ContainerFromItem(e.Row.Item) as System.Windows.Controls.DataGridRow;
+                row.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+            }
+            
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Linq;
 
 
 
@@ -226,7 +227,7 @@ namespace DesktopClient.ViewModel
                     ?? (_addCommand = new RelayCommand(
                     () =>
                     {
-                        Messenger.Default.Send<DBModel.domainDiary>(DiaryItem, "ShowDiaryView");
+                        Messenger.Default.Send<DBModel.domainDiary>(new DBModel.domainDiary(), "ShowDiaryView");
 
                     }));
             }
@@ -272,7 +273,7 @@ namespace DesktopClient.ViewModel
             Messenger.Default.Send<bool>(true, "ShowBusy");
             Messenger.Default.Send<string>("获取用户信息...", "SetBusyContent");
             _dataService.GetUserInfo();
-            _dataService.OnLoadDiarys +=_dataService_OnLoadDiarys;
+            _dataService.OnLoadDiarys += _dataService_OnLoadDiarys;
 
             DiaryItem = new DBModel.domainDiary();
             DiaryItems = new ObservableCollection<DBModel.domainDiary>();
@@ -328,7 +329,18 @@ namespace DesktopClient.ViewModel
             this.DiaryItem.fileId = -1;
             this.DiaryItem.userId = this.UserInfo.id;
             this.DiaryItem.valid = true;
-            this.DiaryItems.Add(this.DiaryItem);
+
+            var d = from n in DiaryItems where n.item == obj.item select n;
+
+            if (DiaryItems.Count(di => di.item.Equals(obj.item)) > 0)
+            {
+                var el = DiaryItems.First(di => di.item.Trim().Equals(obj.item.Trim()));
+                el.dtext = obj.dtext;
+                el.increaseTime = obj.increaseTime;
+                el.status = obj.increaseTime;
+            }
+            else
+                this.DiaryItems.Add(this.DiaryItem);
         }
 
         private bool _canEditUserExecute()
@@ -350,6 +362,8 @@ namespace DesktopClient.ViewModel
         {
             Messenger.Default.Send<bool>(true, "ShowBusy");
             //未保存的先保存
+
+            _dataService.InsertDiaryItems(this.DiaryItems);
 
             _dataService.SendDiary(this.UserInfo.number, this.PickDate);
         }
@@ -377,8 +391,12 @@ namespace DesktopClient.ViewModel
         void _dataService_OnDiaryItemsInsert(object sender, ServiceContract.DiaryItemsInsertEventArgs e)
         {
             Messenger.Default.Send<int>(e.Percent, "SaveDiaryItemPercent");
+            if (e.Percent==100)
+            {
+                LoadDiaryItemsByUserIdAndDate();
+            }
         }
-      
+
         void _dataService_OnGetUserInfo(object sender, ServiceContract.UserInfoEventArgs e)
         {
             this.UserInfo = e.UserInfo;
@@ -398,7 +416,7 @@ namespace DesktopClient.ViewModel
                 _dataService.LoadDiaryItems(this.UserInfo.id, PickDate);
             }
 
-            
+
         }
 
         ////public override void Cleanup()

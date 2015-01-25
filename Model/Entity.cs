@@ -25,7 +25,7 @@ namespace DBModel
         /// <summary>
         /// 选中事件
         /// </summary>
-        public event EventHandler SelectedEvnetHandler; 
+        public event EventHandler SelectedEvnetHandler;
         public event PropertyChangedEventHandler PropertyChanged;
         protected void changed(string propertyName)
         {
@@ -1499,7 +1499,7 @@ namespace DBModel
             {
                 throw new Exception(msg);
             }
-            if (model.Parameters.Count == 0 || string.IsNullOrEmpty(model.WhereStr))//没有更新条件，自动根据主键创建更新条件
+            if (model.Parameters == null || model.Parameters.Count == 0 || string.IsNullOrEmpty(model.WhereStr))//没有更新条件，自动根据主键创建更新条件
             {
                 string sql = ReflectionHelper.CreateUpdate(model.GetType());
                 List<IDataParameter> paras = new List<IDataParameter>();

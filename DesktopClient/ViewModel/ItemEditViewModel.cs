@@ -54,7 +54,7 @@ namespace DesktopClient.ViewModel
 
             CancelCommand = new RelayCommand(() =>
             {
-                MessengerInstance.Send<object>(null, "CloseWindow");
+                MessengerInstance.Send<object>(null, "CloseItemEditView");
             });
             _diaryItem = new DBModel.domainDiary();
             SaveCommand = new RelayCommand(_saveExecute, _canSaveExecute);
@@ -83,13 +83,14 @@ namespace DesktopClient.ViewModel
 
         private bool _canSaveExecute()
         {
-            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) && !this.ItemNameExists;
+            //return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) && !this.ItemNameExists;
+            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) ;
         }
 
         private void _saveExecute()
         {
             Messenger.Default.Send<DBModel.domainDiary>(this.DiaryItem, "ReturnItemContent");
-            MessengerInstance.Send<object>(null, "CloseWindow");
+            MessengerInstance.Send<object>(null, "CloseItemEditView");
 
         }
 
