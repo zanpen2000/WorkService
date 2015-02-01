@@ -66,14 +66,21 @@ namespace DesktopClient.ViewModel
         void _dataService_OnItemNameExists(object sender, ItemNameExistsEventArg e)
         {
             this.ItemNameExists = e.Exists;
-            Messenger.Default.Send<bool>(e.Exists,"ItemNameExists");
+            Messenger.Default.Send<bool>(e.Exists, "ItemNameExists");
         }
 
         public bool ItemNameExists { get; set; }
 
         private void CheckItemNameExists(string itemname)
         {
-            _dataService.CheckItemNameExists(itemname);
+            if (string.IsNullOrEmpty(itemname))
+            {
+                Messenger.Default.Send<bool>(false, "ItemNameExists");
+            }
+            else
+            {
+                _dataService.CheckItemNameExists(itemname);
+            }
         }
 
         private void SetDiaryItem(DBModel.domainDiary item)
@@ -84,7 +91,7 @@ namespace DesktopClient.ViewModel
         private bool _canSaveExecute()
         {
             //return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) && !this.ItemNameExists;
-            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) ;
+            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext);
         }
 
         private void _saveExecute()

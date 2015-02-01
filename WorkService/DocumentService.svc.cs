@@ -14,8 +14,7 @@ using _3rd;
 
 namespace WorkService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession, ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public class DocumentService : IDocumentService
+    public partial class ServiceImpl : IDocumentService
     {
         public void GetUserDiarys(string userNum, string currentpage)
         {
@@ -76,15 +75,6 @@ namespace WorkService
                     item.Insert();
                 }
 
-                //if (dd.SelectCount(d => d.userId == item.userId && d.date == item.date && d.item.Trim() == item.item.Trim()) > 0)
-                //{
-                //    item.Update();
-                //}
-                //else
-                //{
-                //    item.Insert();
-                //}
-
                 i++;
                 int percent = (int)(((double)i / (double)((long)diaryItems.Count())) * 100);
                 if (OperationContext.Current.Channel.State == CommunicationState.Opened)
@@ -100,12 +90,10 @@ namespace WorkService
 
             string newfilename = SaveExcelFile(number, date);
 
-
-
             if (OperationContext.Current.Channel.State == CommunicationState.Opened)
                 callback.ReturnSaveExcelFile(System.IO.Path.GetFileName(newfilename));
 
-            bool sendOk = __sendMail(number, newfilename);
+            bool sendOk = __sendMail(number, date, newfilename);
             if (OperationContext.Current.Channel.State == CommunicationState.Opened)
                 callback.ReturnSendDiary(sendOk, sendOk ? "日志发送成功" : "日志发送失败");
         }
@@ -164,7 +152,7 @@ namespace WorkService
             return newfilename;
         }
 
-        private bool __sendMail(string number, string newfilename)
+        private bool __sendMail(string number, DateTime date, string newfilename)
         {
             codeUsers user = new codeUsers().Where(u => u.number == number).Select();
 
@@ -187,7 +175,10 @@ namespace WorkService
                 df.sent = true;
                 df.Update();
 
-
+                domainDiary dd = new domainDiary();
+                var ds = dd.Where(d => d.userId == user.id && d.date == date).SelectList();
+                ds.ForEach(r => r.sent = true);
+                ds.UpdateList();
             }
             return result;
         }

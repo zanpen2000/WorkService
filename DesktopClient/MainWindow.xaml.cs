@@ -93,16 +93,15 @@ namespace DesktopClient
             Messenger.Default.Send<DBModel.domainDiary>((DBModel.domainDiary)datagrid.CurrentItem, "ShowDiaryView");
         }
 
-       
-
         private void datagrid_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
         {
             var drv = e.Row.Item as DBModel.domainDiary;
             
+            //判断是否已经保存
             if (drv.fileId > 0)
             {
                 var row = datagrid.ItemContainerGenerator.ContainerFromItem(e.Row.Item) as System.Windows.Controls.DataGridRow;
-                row.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+                row.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.LightGray);
             }
             
         }

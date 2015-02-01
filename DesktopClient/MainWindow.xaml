@@ -5,15 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:ignore="http://www.ignore.com"
+        xmlns:converter="clr-namespace:DesktopClient.Conveter"
         mc:Ignorable="d ignore"
-        Height="452"
+        SizeToContent="Height"
+        MaxHeight="480"
         Width="800"        
         WindowStartupLocation="CenterScreen"
+       
         Title="{Binding WelcomeTitle}"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
 
+    <Window.Resources>
+        <converter:MailSentConverter x:Key="MailSentConverter" />
+        <converter:SaveFilePathConverter x:Key="SaveFilePathConverter"/>
+    </Window.Resources>
+  
     <xctk:BusyIndicator x:Name="_busy" IsBusy="False" BusyContent="" DisplayAfter="0"   >
-        <Grid x:Name="LayoutRoot" Margin="20,20,20,20" Background="WhiteSmoke">
+        <Grid x:Name="LayoutRoot" Margin="20,20,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -24,8 +32,8 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="DarkGray">
-                <TextBlock Text="工作日志" FontSize="20" Foreground="White" VerticalAlignment="Center" Margin="10"/>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#336699" Opacity="0.9">
+                <TextBlock Text="达意科技个人工作日志" FontSize="20" Foreground="White" VerticalAlignment="Center" Margin="10"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
@@ -33,21 +41,33 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <DataGrid x:Name="datagrid" Grid.Row="0" AutoGenerateColumns="False" ItemsSource="{Binding DiaryItems,UpdateSourceTrigger=PropertyChanged}" 
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="datagrid" Grid.Row="0" AutoGenerateColumns="False" 
+                          ItemsSource="{Binding DiaryItems,UpdateSourceTrigger=PropertyChanged}" 
                           SelectionMode="Extended"
                           IsReadOnly="True"
                           MouseDoubleClick="DataGrid_MouseDoubleClick"
                           RowDetailsTemplate="{Binding DiaryItem}"
                           LoadingRow="datagrid_LoadingRow" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Path=id}"/>
-                        <DataGridTextColumn Header="项目名称" Binding="{Binding item}"/>
-                        <DataGridTextColumn Header="日志内容" Binding="{Binding dtext}"/>
-                        <DataGridTextColumn Header="状态" Binding="{Binding status}"/>
-                        <DataGridTextColumn Header="预计增时" Binding="{Binding increaseTime}"/>
-                        <DataGridTextColumn Binding="{Binding fileId}" Visibility="Collapsed"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="编号" Binding="{Binding Path=id}"/>
+                            <DataGridTextColumn Header="项目名称" Binding="{Binding item}"/>
+                            <DataGridTextColumn Header="日志内容" Binding="{Binding dtext}" MinWidth="60" MaxWidth="200"/>
+                            <DataGridTextColumn Header="状态" Binding="{Binding status}"/>
+                            <DataGridTextColumn Header="预计增时" Binding="{Binding increaseTime}"/>
+                            <DataGridTextColumn Binding="{Binding fileId}" Visibility="Collapsed"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Background="AliceBlue" Orientation="Horizontal">
+                        <Label>文件路径</Label>
+                        <Label Content="{Binding DiaryItem.fileId, Converter={StaticResource SaveFilePathConverter}}"></Label>
+                        <Label>是否发送</Label>
+                        <Label Content="{Binding DiaryItem.sent, Converter={StaticResource MailSentConverter}}" ></Label>                    </StackPanel>
+                </Grid>
                 <Grid Grid.Row="1"  >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -58,15 +78,15 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition/>                        
                     </Grid.ColumnDefinitions>
-                    <ProgressBar x:Name="_saveProgress" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" BorderThickness="0" Foreground="Red" Visibility="Collapsed"/>
-                    <Button Content="Add" Command="{Binding AddCommand}" Grid.Column="0" Grid.Row="1"/>
-                    <Button Content="Save" Command="{Binding SaveItemsCommand}" Grid.Column="1" Grid.Row="1"/>
-                    <Button Content="Send" Command="{Binding SendMailCommand}" Grid.Column="2" Grid.Row="1"/>
-                    <Button Content="Erase" Command="{Binding EraseItemsCommand}" Grid.Column="3" Grid.Row="1"/>
-                    <Button Content="Close" Command="{Binding CloseCommand}" Grid.Column="4" Grid.Row="1"/>
+                    <ProgressBar x:Name="_saveProgress" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" 
+                                 BorderThickness="0" Foreground="Red" Visibility="Collapsed"/>
+                    <Button Content="(_A)增加" Command="{Binding AddCommand}" Grid.Column="0" Grid.Row="1"/>
+                    <Button Content="(_S)保存" Command="{Binding SaveItemsCommand}" Grid.Column="1" Grid.Row="1"/>
+                    <Button Content="(_X)发送" Command="{Binding SendMailCommand}" Grid.Column="2" Grid.Row="1"/>
+                    <Button Content="(_D)删除" Command="{Binding EraseItemsCommand}" Grid.Column="3" Grid.Row="1"/>
+                    <Button Content="(_C)关闭" Command="{Binding CloseCommand}" Grid.Column="4" Grid.Row="1"/>
                 </Grid>
             </Grid>
 
@@ -75,10 +95,15 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Calendar Grid.Row="0"  SelectedDate="{Binding PickDate}" SelectionMode="SingleDate"
-                          SelectedDatesChanged="Calendar_SelectedDatesChanged" >
+                <Calendar Grid.Row="0" SelectedDate="{Binding PickDate}" SelectionMode="SingleDate"
+                          SelectedDatesChanged="Calendar_SelectedDatesChanged"
+                          CalendarItemStyle="{DynamicResource CalendarItemStyle1}"
+                          CalendarDayButtonStyle="{DynamicResource CalendarDayButtonStyle1}"
+                          CalendarButtonStyle="{DynamicResource CalendarButtonStyle1}"
+                          Style="{DynamicResource CalendarStyle1}"
+                          >
                 </Calendar>
-                <Grid Grid.Row="1"  >
+                <Grid Grid.Row="1" Background="WhiteSmoke" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
@@ -93,25 +118,25 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="编号" Grid.Column="0" Grid.Row="0" />
-                    <TextBox Text="{Binding UserInfo.number}" Grid.Column="1" Grid.Row="0" IsEnabled="False"/>
+                    <TextBox Text="{Binding UserInfo.number}" Grid.Column="1" Grid.Row="0" IsEnabled="False" BorderThickness="0"/>
 
                     <TextBlock Text="姓名" Grid.Column="0" Grid.Row="1" />
-                    <TextBox Text="{Binding UserInfo.name}" Grid.Column="1" Grid.Row="1"  IsEnabled="False"/>
+                    <TextBox Text="{Binding UserInfo.name}" Grid.Column="1" Grid.Row="1"  IsEnabled="False" BorderThickness="0"/>
 
                     <TextBlock Text="部门" Grid.Column="0" Grid.Row="2" />
-                    <TextBox Text="{Binding UserInfo.departId}" Grid.Column="1" Grid.Row="2"  IsEnabled="False"/>
+                    <TextBox Text="{Binding UserInfo.departId}" Grid.Column="1" Grid.Row="2"  IsEnabled="False" BorderThickness="0"/>
 
                     <TextBlock Text="邮箱" Grid.Column="0" Grid.Row="3" />
-                    <TextBox Text="{Binding UserInfo.mail}" Grid.Column="1" Grid.Row="3"  IsEnabled="False"/>
+                    <TextBox Text="{Binding UserInfo.mail}" Grid.Column="1" Grid.Row="3"  IsEnabled="False" BorderThickness="0"/>
 
                     <TextBlock Text="密码" Grid.Column="0" Grid.Row="4" />
                     <TextBox Text="{Binding UserInfo.mailpwd}" Grid.Column="1" Grid.Row="4"  Visibility="Collapsed"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="4" x:Name="txtPwd" IsEnabled="False"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="4" x:Name="txtPwd" IsEnabled="False" BorderThickness="0"/>
 
                     <TextBlock Text="发送到" Grid.Column="0" Grid.Row="5" />
-                    <TextBox Text="{Binding UserInfo.mailto}" Grid.Column="1" Grid.Row="5"  IsEnabled="False"/>
+                    <TextBox Text="{Binding UserInfo.mailto}" Grid.Column="1" Grid.Row="5"  IsEnabled="False" BorderThickness="0"/>
 
-                    <Button Content="Edit User" Command="{Binding EditUserCommand}" 
+                    <Button Content="编辑用户信息" Command="{Binding EditUserCommand}" 
                             Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
                 </Grid>
             </Grid>

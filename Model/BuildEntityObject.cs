@@ -261,13 +261,13 @@ namespace DBModel
 					public System.String increaseTime{ set { _increaseTime = value; changed("increaseTime");} get { return _increaseTime; } }
 
 				
-					private System.Boolean _valid = true;
+					private System.Boolean _sent = true;
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "valid", FieldType = "bit", FieldRemark = "", Length = 1, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
+					[DataEntityFieldAttribute(FieldName = "sent", FieldType = "bit", FieldRemark = "", Length = 1, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
-					public System.Boolean valid{ set { _valid = value; changed("valid");} get { return _valid; } }
+					public System.Boolean sent{ set { _sent = value; changed("sent");} get { return _sent; } }
 
 				
 					private System.Int32 _fileId = 0;

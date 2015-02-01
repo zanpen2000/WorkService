@@ -328,7 +328,7 @@ namespace DesktopClient.ViewModel
             this.DiaryItem.date = this.PickDate;
             this.DiaryItem.fileId = -1;
             this.DiaryItem.userId = this.UserInfo.id;
-            this.DiaryItem.valid = true;
+            this.DiaryItem.sent = false;
 
             var d = from n in DiaryItems where n.item == obj.item select n;
 

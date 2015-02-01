@@ -16,7 +16,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="DarkGray">
+        <Grid Grid.Row="0" Background="#336699">
             <TextBlock Text="项目描述" FontSize="20" Foreground="White" VerticalAlignment="Center" Margin="10"/>
         </Grid>
 
@@ -55,8 +55,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Save" Command="{Binding SaveCommand}" Grid.Column="0"/>
-            <Button Content="Cancel" Command="{Binding CancelCommand}" Grid.Column="1"/>
+            <Button Content="(_S)保存" Command="{Binding SaveCommand}" Grid.Column="0"/>
+            <Button Content="(_C)取消" Command="{Binding CancelCommand}" Grid.Column="1"/>
         </Grid>
     </Grid>
 </Window>
