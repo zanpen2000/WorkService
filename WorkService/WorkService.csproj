@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DocumentService.svc" />
-    <Content Include="SingleChannelService.svc" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -71,9 +70,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl.cs" />
-    <Compile Include="SingleChannelService.svc.cs">
-      <DependentUpon>SingleChannelService.svc</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

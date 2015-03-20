@@ -8,8 +8,8 @@
         xmlns:converter="clr-namespace:DesktopClient.Conveter"
         mc:Ignorable="d ignore"
         SizeToContent="Height"
-        MaxHeight="480"
-        Width="800"        
+        MaxHeight="480" Height="480"
+        Width="800" MaxWidth="800"
         WindowStartupLocation="CenterScreen"
        
         Title="{Binding WelcomeTitle}"
@@ -17,10 +17,9 @@
 
     <Window.Resources>
         <converter:MailSentConverter x:Key="MailSentConverter" />
-        <converter:SaveFilePathConverter x:Key="SaveFilePathConverter"/>
     </Window.Resources>
-  
-    <xctk:BusyIndicator x:Name="_busy" IsBusy="False" BusyContent="" DisplayAfter="0"   >
+
+    <xctk:BusyIndicator x:Name="_busy" IsBusy="False" BusyContent="" DisplayAfter="2"   >
         <Grid x:Name="LayoutRoot" Margin="20,20,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -49,6 +48,7 @@
                     <DataGrid x:Name="datagrid" Grid.Row="0" AutoGenerateColumns="False" 
                           ItemsSource="{Binding DiaryItems,UpdateSourceTrigger=PropertyChanged}" 
                           SelectionMode="Extended"
+                          SelectedItem="{Binding DiaryItem,UpdateSourceTrigger=PropertyChanged}"
                           IsReadOnly="True"
                           MouseDoubleClick="DataGrid_MouseDoubleClick"
                           RowDetailsTemplate="{Binding DiaryItem}"
@@ -64,9 +64,11 @@
                     </DataGrid>
                     <StackPanel Grid.Row="1" Background="AliceBlue" Orientation="Horizontal">
                         <Label>文件路径</Label>
-                        <Label Content="{Binding DiaryItem.fileId, Converter={StaticResource SaveFilePathConverter}}"></Label>
+                        <Label Content="{Binding DiaryItem.fileId, 
+                            UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"></Label>
                         <Label>是否发送</Label>
-                        <Label Content="{Binding DiaryItem.sent, Converter={StaticResource MailSentConverter}}" ></Label>                    </StackPanel>
+                        <Label Content="{Binding DiaryItem.sent, Converter={StaticResource MailSentConverter},UpdateSourceTrigger=PropertyChanged}" ></Label>
+                    </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1"  >
                     <Grid.RowDefinitions>
@@ -78,7 +80,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>                        
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <ProgressBar x:Name="_saveProgress" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" 
                                  BorderThickness="0" Foreground="Red" Visibility="Collapsed"/>

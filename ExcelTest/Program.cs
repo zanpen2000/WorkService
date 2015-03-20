@@ -5,6 +5,8 @@ using System.Text;
 
 namespace ExcelTest
 {
+  
+
     class Program
     {
         static void Main(string[] args)
@@ -40,7 +42,7 @@ namespace ExcelTest
 
             Console.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
 
-
+            
 
             string code1 = _3rd.Security.Encode("10463082");
             string code2 = _3rd.Security.Decode(code1);

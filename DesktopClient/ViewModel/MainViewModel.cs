@@ -283,6 +283,12 @@ namespace DesktopClient.ViewModel
             SaveItemsCommand = new RelayCommand(_saveItemsExecute);
             Messenger.Default.Register<DBModel.domainDiary>(this, "ReturnItemContent", ReturnItemContent);
             Messenger.Default.Register<DateTime?>(this, "RetrieveContentByDate", RetrieveContentByDate);
+            
+        }
+
+        private void RetrieveContentByDate(DateTime? obj)
+        {
+            LoadDiaryItemsByUserIdAndDate();
         }
 
         private void _saveItemsExecute()
@@ -311,15 +317,17 @@ namespace DesktopClient.ViewModel
             }
         }
 
-        private void RetrieveContentByDate(DateTime? obj)
-        {
-            LoadDiaryItemsByUserIdAndDate();
-        }
+       
 
         void _dataService_OnLoadDiarys(object sender, ServiceContract.DiarysEventArgs e)
         {
             this.DiaryItems = new ObservableCollection<DBModel.domainDiary>(e.Items);
-            Messenger.Default.Send<bool>(false, "ShowBusy");
+            if (this.DiaryItems.Count > 0)
+            {
+                this.DiaryItem = this.DiaryItems.First();
+            }
+            
+            //Messenger.Default.Send<bool>(false, "ShowBusy");
         }
 
         private void ReturnItemContent(DBModel.domainDiary obj)
@@ -410,8 +418,8 @@ namespace DesktopClient.ViewModel
         {
             if (this.UserInfo != null)
             {
-                Messenger.Default.Send<bool>(true, "ShowBusy");
-                Messenger.Default.Send<string>("获取所选日期的日志...", "SetBusyContent");
+                //Messenger.Default.Send<bool>(true, "ShowBusy");
+                //Messenger.Default.Send<string>("获取所选日期的日志...", "SetBusyContent");
 
                 _dataService.LoadDiaryItems(this.UserInfo.id, PickDate);
             }
@@ -419,12 +427,7 @@ namespace DesktopClient.ViewModel
 
         }
 
-        ////public override void Cleanup()
-        ////{
-        ////    // Clean up if needed
-
-        ////    base.Cleanup();
-        ////}
+    
 
 
 

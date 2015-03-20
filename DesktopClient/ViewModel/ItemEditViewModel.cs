@@ -90,8 +90,8 @@ namespace DesktopClient.ViewModel
 
         private bool _canSaveExecute()
         {
-            //return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext) && !this.ItemNameExists;
-            return !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext);
+            
+            return DiaryItem!=null && !string.IsNullOrEmpty(DiaryItem.item) && !string.IsNullOrEmpty(DiaryItem.dtext);
         }
 
         private void _saveExecute()

@@ -9,20 +9,7 @@ namespace DesktopClient.Conveter
     using AppLayer;
     using ServiceContract;
 
-    public class SaveFilePathConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            string filepath = string.Empty;
-            ServiceCaller.Execute<ISingleChannelService>(svc => filepath = svc.GetFilePathById((int)value));
-            return filepath;
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 
     public class MailSentConverter : IValueConverter
     {

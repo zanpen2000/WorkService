@@ -16,7 +16,7 @@ namespace DesktopClient
         {
             InitializeComponent();
             Messenger.Default.Register<object>(this, "CloseItemEditView", (obj) => { this.Close(); });
-            Messenger.Default.Register<bool>(this, "ItemNameExists", ItemNameExists);
+            //Messenger.Default.Register<bool>(this, "ItemNameExists", ItemNameExists);
         }
 
         private void ItemNameExists(bool obj)
