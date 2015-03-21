@@ -118,15 +118,20 @@ namespace WorkService
             using (var eh = new DiaryExcelHelper(templateFile))
             {
                 eh.RowToInsert = int.Parse(settings.Where(s => s.name == "RowToInsert").Select().value);
+                eh.RowsOfEachItem = int.Parse(settings.Where(s => s.name == "rowsOfEachItem").Select().value);
                 eh.NumberPosition = settings.Where(s => s.name == "NumberPosition").Select().value;
                 eh.NamePosition = settings.Where(s => s.name == "NamePosition").Select().value;
                 eh.DepartPosition = settings.Where(s => s.name == "DepartPosition").Select().value;
                 eh.DatePosition = settings.Where(s => s.name == "DatePosition").Select().value;
 
+                int j = eh.RowToInsert;
                 foreach (var d in ds)
                 {
+                    j += eh.RowsOfEachItem;
                     eh.InsertItem(d);
                 }
+
+                eh.Merge(eh.RowToInsert - 1, 1, j-1, 1);
 
                 eh.SaveAs(newfilename);
             }
@@ -160,7 +165,6 @@ namespace WorkService
             email.host = "smtp.qq.com";
             email.port = 587;
             email.mailFrom = user.mail;
-            //email.mailPwd = user.mailpwd;
             email.mailPwd = _3rd.Security.Decode(user.mailpwd);
             email.mailSubject = System.IO.Path.GetFileNameWithoutExtension(newfilename) + " " + user.name;
             email.mailToArray = user.mailto.Split(';');
