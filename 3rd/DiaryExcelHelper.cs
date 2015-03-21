@@ -19,6 +19,8 @@ namespace _3rd
         public string DepartPosition { get; set; }
         public string NamePosition { get; set; }
 
+        public int RowsOfEachItem { get; set; }
+
         ExcelPackage _excelPackage;
 
         ExcelWorksheet _workSheet;
@@ -26,7 +28,7 @@ namespace _3rd
         public DiaryExcelHelper(string filename)
         {
             System.IO.FileInfo fi = new System.IO.FileInfo(filename);
-            
+
             _excelPackage = new ExcelPackage(fi);
             _workSheet = _excelPackage.Workbook.Worksheets[_sheetName];
         }
@@ -83,6 +85,7 @@ namespace _3rd
             range.Merge = true;
             range.Style.WrapText = true;
             range.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             border = range.Style.Border;
             border.Bottom.Style = border.Top.Style = border.Left.Style = border.Right.Style = ExcelBorderStyle.Thin;
 
@@ -92,19 +95,27 @@ namespace _3rd
             range = _workSheet.Cells[RowToInsert, 9, RowToInsert + 4 - 1, 9];
             range.Merge = true;
             range.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             border = range.Style.Border;
             border.Bottom.Style = border.Top.Style = border.Left.Style = ExcelBorderStyle.Thin;
             border.Right.Style = ExcelBorderStyle.Thick;
 
             //左边线
             range = _workSheet.Cells[RowToInsert, 1, RowToInsert + 4 - 1, 1];
-             border = range.Style.Border;
+            border = range.Style.Border;
             border.Left.Style = ExcelBorderStyle.Thick;
 
             SetDate(diary.date.ToShortDateString());
             SetDepart(diary.depart);
             SetNumber("N" + diary.number);
             SetStaffName(diary.name);
+
+  
+        }
+
+        public void Merge(int fromRow, int fromCol, int toRow, int toCol)
+        {
+            _workSheet.Cells[fromRow, fromCol, toRow, toCol].Merge = true;
         }
 
         public void Save()
