@@ -8,8 +8,8 @@
         xmlns:converter="clr-namespace:DesktopClient.Conveter"
         mc:Ignorable="d ignore"
         SizeToContent="Height"
-        MaxHeight="480" Height="480"
-        Width="800" MaxWidth="800"
+        MaxHeight="740" Height="740"
+        Width="1024" MaxWidth="1024"
         WindowStartupLocation="CenterScreen"
        
         Title="{Binding WelcomeTitle}"
@@ -20,7 +20,7 @@
     </Window.Resources>
 
     <xctk:BusyIndicator x:Name="_busy" IsBusy="False" BusyContent="" DisplayAfter="2"   >
-        <Grid x:Name="LayoutRoot" Margin="20,20,20,20">
+        <Grid x:Name="LayoutRoot" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -103,6 +103,7 @@
                           CalendarDayButtonStyle="{DynamicResource CalendarDayButtonStyle1}"
                           CalendarButtonStyle="{DynamicResource CalendarButtonStyle1}"
                           Style="{DynamicResource CalendarStyle1}"
+                          
                           >
                 </Calendar>
                 <Grid Grid.Row="1" Background="WhiteSmoke" >

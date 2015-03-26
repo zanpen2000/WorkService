@@ -12,10 +12,10 @@
 
 <# 
   string NameSpace="DBModel";
-  string Server=".";
+  string Server="192.168.2.123";
   string DataBase="WorkService"; 
   string UserName="sa"; 
-  string PassWord="010203";  
+  string PassWord="dykjhz123456@";  
  #> 
 using System;
 using System.Collections.Generic;

@@ -62,7 +62,7 @@ namespace AppLayer
         {
             WSDualHttpBinding binding = new WSDualHttpBinding();
             binding.Security.Mode = WSDualHttpSecurityMode.None;
-            binding.ClientBaseAddress = new Uri(string.Format("{0}{1}", "http://localhost:7799/Callback/", Guid.NewGuid().ToString()));
+            //binding.ClientBaseAddress = new Uri(string.Format("{0}{1}", "http://localhost:7799/Callback/", Guid.NewGuid().ToString()));
             return new DuplexChannelFactory<ISvc>(context, binding, new EndpointAddress(addr));
         }
 

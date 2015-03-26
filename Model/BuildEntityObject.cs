@@ -1,5 +1,15 @@
 
 
+
+
+
+
+
+
+
+
+
+
  
 using System;
 using System.Collections.Generic;
@@ -8,7 +18,8 @@ using System.Runtime.Serialization;
 
 namespace DBModel
 {     
-				
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -18,6 +29,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -27,6 +39,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.String _code = "";
 					/// <summary>
 					/// code
@@ -36,6 +49,7 @@ namespace DBModel
 					public System.String code{ set { _code = value; changed("code");} get { return _code; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// name
@@ -45,6 +59,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.Boolean _valid = true;
 					/// <summary>
 					/// 
@@ -53,10 +68,12 @@ namespace DBModel
 					[DataMember]
 					public System.Boolean valid{ set { _valid = value; changed("valid");} get { return _valid; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -66,6 +83,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -75,6 +93,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// 
@@ -84,6 +103,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.String _value = "";
 					/// <summary>
 					/// 
@@ -93,6 +113,7 @@ namespace DBModel
 					public System.String value{ set { _value = value; changed("value");} get { return _value; } }
 
 				
+
 					private System.String _description = "";
 					/// <summary>
 					/// 
@@ -101,10 +122,12 @@ namespace DBModel
 					[DataMember]
 					public System.String description{ set { _description = value; changed("description");} get { return _description; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -114,6 +137,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -123,6 +147,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.String _number = "";
 					/// <summary>
 					/// number
@@ -132,6 +157,7 @@ namespace DBModel
 					public System.String number{ set { _number = value; changed("number");} get { return _number; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// name
@@ -141,6 +167,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.DateTime? _lastSent = null;
 					/// <summary>
 					/// 
@@ -150,6 +177,7 @@ namespace DBModel
 					public System.DateTime? lastSent{ set { _lastSent = value; changed("lastSent");} get { return _lastSent; } }
 
 				
+
 					private System.Int32 _departId = 0;
 					/// <summary>
 					/// 
@@ -159,6 +187,7 @@ namespace DBModel
 					public System.Int32 departId{ set { _departId = value; changed("departId");} get { return _departId; } }
 
 				
+
 					private System.String _mail = "";
 					/// <summary>
 					/// mail
@@ -168,6 +197,7 @@ namespace DBModel
 					public System.String mail{ set { _mail = value; changed("mail");} get { return _mail; } }
 
 				
+
 					private System.String _mailpwd = "";
 					/// <summary>
 					/// mailpwd
@@ -177,6 +207,7 @@ namespace DBModel
 					public System.String mailpwd{ set { _mailpwd = value; changed("mailpwd");} get { return _mailpwd; } }
 
 				
+
 					private System.String _mailto = "";
 					/// <summary>
 					/// mailto
@@ -185,10 +216,12 @@ namespace DBModel
 					[DataMember]
 					public System.String mailto{ set { _mailto = value; changed("mailto");} get { return _mailto; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -198,6 +231,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -207,6 +241,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.Int32 _userId = 0;
 					/// <summary>
 					/// 
@@ -216,6 +251,7 @@ namespace DBModel
 					public System.Int32 userId{ set { _userId = value; changed("userId");} get { return _userId; } }
 
 				
+
 					private System.String _item = "";
 					/// <summary>
 					/// 
@@ -225,6 +261,7 @@ namespace DBModel
 					public System.String item{ set { _item = value; changed("item");} get { return _item; } }
 
 				
+
 					private System.String _dtext = "";
 					/// <summary>
 					/// 
@@ -234,6 +271,7 @@ namespace DBModel
 					public System.String dtext{ set { _dtext = value; changed("dtext");} get { return _dtext; } }
 
 				
+
 					private System.DateTime _date = DateTime.Now;
 					/// <summary>
 					/// 
@@ -243,6 +281,7 @@ namespace DBModel
 					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
 
 				
+
 					private System.String _status = "";
 					/// <summary>
 					/// 
@@ -252,6 +291,7 @@ namespace DBModel
 					public System.String status{ set { _status = value; changed("status");} get { return _status; } }
 
 				
+
 					private System.String _increaseTime = "";
 					/// <summary>
 					/// 
@@ -261,6 +301,7 @@ namespace DBModel
 					public System.String increaseTime{ set { _increaseTime = value; changed("increaseTime");} get { return _increaseTime; } }
 
 				
+
 					private System.Boolean _sent = true;
 					/// <summary>
 					/// 
@@ -270,6 +311,7 @@ namespace DBModel
 					public System.Boolean sent{ set { _sent = value; changed("sent");} get { return _sent; } }
 
 				
+
 					private System.Int32 _fileId = 0;
 					/// <summary>
 					/// 
@@ -278,10 +320,12 @@ namespace DBModel
 					[DataMember]
 					public System.Int32 fileId{ set { _fileId = value; changed("fileId");} get { return _fileId; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -291,6 +335,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -300,6 +345,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.Int32 _userId = 0;
 					/// <summary>
 					/// 
@@ -309,6 +355,7 @@ namespace DBModel
 					public System.Int32 userId{ set { _userId = value; changed("userId");} get { return _userId; } }
 
 				
+
 					private System.DateTime _date = DateTime.Now;
 					/// <summary>
 					/// 
@@ -318,6 +365,7 @@ namespace DBModel
 					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
 
 				
+
 					private System.String _filepath = "";
 					/// <summary>
 					/// 
@@ -327,6 +375,7 @@ namespace DBModel
 					public System.String filepath{ set { _filepath = value; changed("filepath");} get { return _filepath; } }
 
 				
+
 					private System.Boolean _sent = true;
 					/// <summary>
 					/// 
@@ -335,10 +384,12 @@ namespace DBModel
 					[DataMember]
 					public System.Boolean sent{ set { _sent = value; changed("sent");} get { return _sent; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -348,6 +399,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -357,6 +409,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.Int32 _userId = 0;
 					/// <summary>
 					/// 
@@ -366,6 +419,7 @@ namespace DBModel
 					public System.Int32 userId{ set { _userId = value; changed("userId");} get { return _userId; } }
 
 				
+
 					private System.DateTime _date = DateTime.Now;
 					/// <summary>
 					/// 
@@ -375,6 +429,7 @@ namespace DBModel
 					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
 
 				
+
 					private System.String _pos = "";
 					/// <summary>
 					/// 
@@ -384,6 +439,7 @@ namespace DBModel
 					public System.String pos{ set { _pos = value; changed("pos");} get { return _pos; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// 
@@ -393,6 +449,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.Boolean _valid = true;
 					/// <summary>
 					/// 
@@ -401,10 +458,12 @@ namespace DBModel
 					[DataMember]
 					public System.Boolean valid{ set { _valid = value; changed("valid");} get { return _valid; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -414,6 +473,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -423,6 +483,7 @@ namespace DBModel
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
 				
+
 					private System.Int32 _itemId = 0;
 					/// <summary>
 					/// 
@@ -432,6 +493,7 @@ namespace DBModel
 					public System.Int32 itemId{ set { _itemId = value; changed("itemId");} get { return _itemId; } }
 
 				
+
 					private System.String _text = "";
 					/// <summary>
 					/// 
@@ -440,10 +502,12 @@ namespace DBModel
 					[DataMember]
 					public System.String text{ set { _text = value; changed("text");} get { return _text; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -453,6 +517,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.String _number = "";
 					/// <summary>
 					/// 
@@ -462,6 +527,7 @@ namespace DBModel
 					public System.String number{ set { _number = value; changed("number");} get { return _number; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// 
@@ -471,6 +537,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.String _depart = "";
 					/// <summary>
 					/// 
@@ -480,6 +547,7 @@ namespace DBModel
 					public System.String depart{ set { _depart = value; changed("depart");} get { return _depart; } }
 
 				
+
 					private System.String _item = "";
 					/// <summary>
 					/// 
@@ -489,6 +557,7 @@ namespace DBModel
 					public System.String item{ set { _item = value; changed("item");} get { return _item; } }
 
 				
+
 					private System.String _dtext = "";
 					/// <summary>
 					/// 
@@ -498,6 +567,7 @@ namespace DBModel
 					public System.String dtext{ set { _dtext = value; changed("dtext");} get { return _dtext; } }
 
 				
+
 					private System.DateTime _date = DateTime.Now;
 					/// <summary>
 					/// 
@@ -507,6 +577,7 @@ namespace DBModel
 					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
 
 				
+
 					private System.String _increaseTime = "";
 					/// <summary>
 					/// 
@@ -516,6 +587,7 @@ namespace DBModel
 					public System.String increaseTime{ set { _increaseTime = value; changed("increaseTime");} get { return _increaseTime; } }
 
 				
+
 					private System.String _status = "";
 					/// <summary>
 					/// 
@@ -525,6 +597,7 @@ namespace DBModel
 					public System.String status{ set { _status = value; changed("status");} get { return _status; } }
 
 				
+
 					private System.Int32 _fileId = 0;
 					/// <summary>
 					/// 
@@ -533,10 +606,12 @@ namespace DBModel
 					[DataMember]
 					public System.Int32 fileId{ set { _fileId = value; changed("fileId");} get { return _fileId; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -546,6 +621,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.String _name = "";
 					/// <summary>
 					/// 
@@ -555,6 +631,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.String _text = "";
 					/// <summary>
 					/// 
@@ -564,6 +641,7 @@ namespace DBModel
 					public System.String text{ set { _text = value; changed("text");} get { return _text; } }
 
 				
+
 					private System.Int32 _userId = 0;
 					/// <summary>
 					/// 
@@ -573,6 +651,7 @@ namespace DBModel
 					public System.Int32 userId{ set { _userId = value; changed("userId");} get { return _userId; } }
 
 				
+
 					private System.DateTime _date = DateTime.Now;
 					/// <summary>
 					/// 
@@ -581,10 +660,12 @@ namespace DBModel
 					[DataMember]
 					public System.DateTime date{ set { _date = value; changed("date");} get { return _date; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -594,6 +675,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.String _number = "";
 					/// <summary>
 					/// 
@@ -603,6 +685,7 @@ namespace DBModel
 					public System.String number{ set { _number = value; changed("number");} get { return _number; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// 
@@ -612,6 +695,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.String _departName = "";
 					/// <summary>
 					/// 
@@ -621,6 +705,7 @@ namespace DBModel
 					public System.String departName{ set { _departName = value; changed("departName");} get { return _departName; } }
 
 				
+
 					private System.String _filepath = "";
 					/// <summary>
 					/// 
@@ -630,33 +715,37 @@ namespace DBModel
 					public System.String filepath{ set { _filepath = value; changed("filepath");} get { return _filepath; } }
 
 				
+
 					private System.String _mail = "";
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mail", FieldType = "varchar", FieldRemark = "", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mail", FieldType = "varchar", FieldRemark = "", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mail{ set { _mail = value; changed("mail");} get { return _mail; } }
 
 				
+
 					private System.String _mailpwd = "";
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mailpwd", FieldType = "varchar", FieldRemark = "", Length = 255, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mailpwd", FieldType = "varchar", FieldRemark = "", Length = 255, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mailpwd{ set { _mailpwd = value; changed("mailpwd");} get { return _mailpwd; } }
 
 				
+
 					private System.String _mailto = "";
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mailto{ set { _mailto = value; changed("mailto");} get { return _mailto; } }
 
 				
+
 					private System.DateTime? _lastSent = null;
 					/// <summary>
 					/// 
@@ -666,6 +755,7 @@ namespace DBModel
 					public System.DateTime? lastSent{ set { _lastSent = value; changed("lastSent");} get { return _lastSent; } }
 
 				
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -674,10 +764,12 @@ namespace DBModel
 					[DataMember]
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
-				}
-
-
 				
+}
+
+
+	
+			
 				/// <summary>
 				/// 
 				/// </summary>
@@ -687,6 +779,7 @@ namespace DBModel
 				{
 					
 			
+
 					private System.String _departName = "";
 					/// <summary>
 					/// 
@@ -696,6 +789,7 @@ namespace DBModel
 					public System.String departName{ set { _departName = value; changed("departName");} get { return _departName; } }
 
 				
+
 					private System.String _number = "";
 					/// <summary>
 					/// 
@@ -705,6 +799,7 @@ namespace DBModel
 					public System.String number{ set { _number = value; changed("number");} get { return _number; } }
 
 				
+
 					private System.String _name = "";
 					/// <summary>
 					/// 
@@ -714,6 +809,7 @@ namespace DBModel
 					public System.String name{ set { _name = value; changed("name");} get { return _name; } }
 
 				
+
 					private System.DateTime? _lastLogin = null;
 					/// <summary>
 					/// 
@@ -723,33 +819,37 @@ namespace DBModel
 					public System.DateTime? lastLogin{ set { _lastLogin = value; changed("lastLogin");} get { return _lastLogin; } }
 
 				
+
 					private System.String _mail = "";
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mail", FieldType = "varchar", FieldRemark = "", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mail", FieldType = "varchar", FieldRemark = "", Length = 100, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mail{ set { _mail = value; changed("mail");} get { return _mail; } }
 
 				
+
 					private System.String _mailpwd = "";
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mailpwd", FieldType = "varchar", FieldRemark = "", Length = 255, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mailpwd", FieldType = "varchar", FieldRemark = "", Length = 255, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mailpwd{ set { _mailpwd = value; changed("mailpwd");} get { return _mailpwd; } }
 
 				
+
 					private System.String _mailto = "";
 					/// <summary>
 					/// 
 					/// </summary>
-					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = true)]
+					[DataEntityFieldAttribute(FieldName = "mailto", FieldType = "varchar", FieldRemark = "", Length = -1, IsPrimaryKey = false, IsIdentity = false, AllowNull = false)]
 					[DataMember]
 					public System.String mailto{ set { _mailto = value; changed("mailto");} get { return _mailto; } }
 
 				
+
 					private System.Int32 _id = 0;
 					/// <summary>
 					/// 
@@ -758,8 +858,10 @@ namespace DBModel
 					[DataMember]
 					public System.Int32 id{ set { _id = value; changed("id");} get { return _id; } }
 
-				}
+				
+}
 
 
 	
+
 }

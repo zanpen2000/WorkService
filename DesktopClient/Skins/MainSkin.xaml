@@ -98,10 +98,10 @@
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
                             <!--日历星期几的绑定样式,我格式化成周一,周二等-->
                             <TextBlock Foreground="#666666"
-                                           FontSize="16"
+                                           FontSize="15"
                                            FontFamily="微软雅黑"
                                            HorizontalAlignment="Center"
-                                           Margin="0 15"
+                                           Margin="0 12"
                                            Text="{Binding StringFormat=周{0} }"
                                            VerticalAlignment="Center" />
                         </DataTemplate>
